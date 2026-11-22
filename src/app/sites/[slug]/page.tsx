@@ -13,7 +13,6 @@ import {
 } from "lucide-react";
 import { formatBytes, formatDate } from "@/lib/utils";
 
-export const dynamic = "force-dynamic";
 
 export default async function SiteDetailsPublicPage({
   params,

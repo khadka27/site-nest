@@ -18,7 +18,6 @@ import {
   Layers,
 } from "lucide-react";
 
-export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const [sections, showcaseSites] = await Promise.all([

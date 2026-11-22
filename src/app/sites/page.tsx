@@ -4,7 +4,6 @@ import Footer from "@/components/layout/Footer";
 import { prisma } from "@/lib/prisma";
 import { Globe, ExternalLink, Search, Layers } from "lucide-react";
 
-export const dynamic = "force-dynamic";
 
 export default async function SitesDirectoryPage({
   searchParams,

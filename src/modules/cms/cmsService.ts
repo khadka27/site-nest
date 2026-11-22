@@ -338,7 +338,7 @@ export async function updateHomepageSection(
     title?: string;
     enabled?: boolean;
     order?: number;
-    content?: Record<string, unknown>;
+    content?: any;
   }
 ) {
   return await prisma.homepageSection.update({

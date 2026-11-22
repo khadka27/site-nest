@@ -5,7 +5,6 @@ import path from "path";
 import fs from "fs/promises";
 import fsSync from "fs";
 
-export const dynamic = "force-dynamic";
 
 export async function GET() {
   const media = await prisma.media.findMany({

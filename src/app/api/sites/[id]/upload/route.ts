@@ -9,7 +9,6 @@ import path from "path";
 import fs from "fs/promises";
 import { logActivity } from "@/lib/activity";
 
-export const dynamic = "force-dynamic";
 
 // POST /api/sites/[id]/upload: Uploads ZIP and initiates deployment
 export async function POST(

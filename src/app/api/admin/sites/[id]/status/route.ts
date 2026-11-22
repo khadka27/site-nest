@@ -21,7 +21,7 @@ export async function PATCH(
   const result = statusSchema.safeParse(body);
 
   if (!result.success) {
-    return NextResponse.json({ error: result.error.errors[0].message }, { status: 400 });
+    return NextResponse.json({ error: result.error.issues[0]?.message || "Invalid input" }, { status: 400 });
   }
 
   const site = await prisma.website.update({

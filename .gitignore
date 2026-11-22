@@ -30,8 +30,14 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
+# storage
+/storage/
+!storage/.gitkeep
+
 # env files (can opt-in for committing if needed)
-.env*
+.env*.local
+.env
+!.env.example
 
 # vercel
 .vercel
