@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Layers, Github, Twitter, Disc as Discord } from "lucide-react";
+import { Layers } from "lucide-react";
 
 export default function Footer() {
   return (

@@ -1,11 +1,12 @@
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 
 export interface CMSSectionData {
   sectionKey: string;
   title: string;
   order: number;
   enabled: boolean;
-  content: Record<string, unknown>;
+  content: any;
 }
 
 export const DEFAULT_HOMEPAGE_SECTIONS: CMSSectionData[] = [
