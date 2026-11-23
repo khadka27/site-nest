@@ -1,27 +1,33 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
+export const metadata = {
+  title: "Frequently Asked Questions — SiteNest Showcase Directory",
+  description:
+    "Common questions about exploring our curated web showcase, live subdomains, and static website standards.",
+};
+
 export default function FAQPage() {
   const faqs = [
     {
-      q: "What files can I include in the ZIP archive?",
-      a: "SiteNest supports static HTML, CSS, JavaScript, WebAssembly, images (PNG, JPG, SVG, WebP), fonts, PDFs, and standard static web assets. It does not execute uploaded PHP, Node.js, Python, or server-side scripts on our hosting servers.",
+      q: "What is the SiteNest Showcase Directory?",
+      a: "SiteNest is an editorial gallery and directory of handcrafted static websites, digital portfolios, and creative agency landing pages. Each entry in our directory is live and hosted with its own dedicated subdomain.",
     },
     {
-      q: "Does index.html have to be at the exact root of the ZIP file?",
-      a: "SiteNest accepts either index.html directly at the root of the archive or inside a single top-level directory (e.g. 'my-build/index.html'). The deployment engine automatically flattens single enclosing folders.",
+      q: "How can I explore and test the websites in the showcase?",
+      a: "You can click on any website card from the directory to open its dedicated inspection page. There you can view metadata, release version, and an interactive sandboxed live preview, or click 'Visit Live Site' to open it directly in a new browser tab.",
     },
     {
-      q: "How does the rollback system work?",
-      a: "Each deployment is preserved in an immutable folder: v1, v2, v3... The active release is managed via a release pointer symlink and active database record. When you click rollback, SiteNest updates the release pointer in milliseconds without re-uploading.",
+      q: "Why are the showcased websites built with static technology?",
+      a: "Static websites built with semantic HTML, modern CSS, and minimal JavaScript provide the highest benchmark for speed, privacy, accessibility, and longevity. They load in milliseconds and never suffer from database latency or security vulnerabilities.",
     },
     {
-      q: "How are subdomains resolved?",
-      a: "Our wildcard DNS (*.sitenest.com) points to our VPS Nginx server. When a request arrives, Nginx matches the subdomain and directly serves static assets from the active deployment folder.",
+      q: "How are subdomains assigned and routed?",
+      a: "Each approved and deployed website receives an automatic wildcard subdomain (such as myproject.sitenest.com) served directly from high-speed storage without application runtime overhead.",
     },
     {
-      q: "What security measures are implemented?",
-      a: "SiteNest features strict Zip Slip protection (path traversal sanitization), decompression size limits, symlink blocking, executable extension blacklists, and per-website isolated directory boundaries.",
+      q: "Who manages and publishes websites to SiteNest?",
+      a: "Publishing and deployments are curated and managed by the SiteNest Administrator through the protected admin control center.",
     },
   ];
 
@@ -32,13 +38,13 @@ export default function FAQPage() {
       <main className="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-8">
         <div className="text-center space-y-3">
           <span className="text-xs font-bold uppercase tracking-widest text-[#5A5B35] dark:text-[#AEAC78]">
-            HELP & GUIDES
+            EXPLORATION & DIRECTORY
           </span>
           <h1 className="text-4xl font-extrabold tracking-tight text-[#4C4541] dark:text-[#FBF3E6]">
             Frequently Asked Questions
           </h1>
           <p className="text-sm text-[#7A6F68] dark:text-[#B5AAA0]">
-            Everything you need to know about static site deployments on SiteNest.
+            Everything you need to know about exploring curated websites on SiteNest.
           </p>
         </div>
 
