@@ -3,6 +3,8 @@ import { getCurrentUser } from "@/lib/auth";
 import { isAdmin } from "@/lib/permissions";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import ThemeToggle from "@/components/ThemeToggle";
+import Link from "next/link";
+import { UploadCloud } from "lucide-react";
 
 export default async function AdminLayout({
   children,
@@ -39,6 +41,15 @@ export default async function AdminLayout({
             <span className="border-l border-[#DECBB0] dark:border-[#3D352F] pl-4 text-[#4C4541] dark:text-[#FBF3E6] font-medium">
               {user.name} ({user.role})
             </span>
+            
+            <Link
+              href="/dashboard/sites/new"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-[#F2C46A] hover:bg-[#E5B555] px-3.5 py-1.5 text-xs font-semibold text-[#2D2305] shadow-sm transition-all"
+            >
+              <UploadCloud className="h-3.5 w-3.5" />
+              Upload ZIP
+            </Link>
+
             <ThemeToggle />
           </div>
         </header>

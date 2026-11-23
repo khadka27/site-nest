@@ -18,6 +18,7 @@ import {
   LogOut,
   Layers,
   ArrowLeft,
+  UploadCloud,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -65,7 +66,7 @@ export default function AdminSidebar() {
     <aside className="w-64 border-r border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#1E1A17] flex flex-col justify-between p-4 shrink-0 overflow-y-auto transition-colors duration-200">
       <div>
         {/* Admin Header */}
-        <div className="flex items-center justify-between px-3 py-2 mb-4">
+        <div className="flex items-center justify-between px-3 py-2 mb-3">
           <Link href="/" className="flex items-center gap-2 font-bold text-lg text-[#4C4541] dark:text-[#FBF3E6]">
             <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#F2C46A] text-[#2D2305]">
               <Layers className="h-4 w-4" />
@@ -76,6 +77,15 @@ export default function AdminSidebar() {
             v1.0
           </span>
         </div>
+
+        {/* Primary Action: Deploy New Site */}
+        <Link
+          href="/dashboard/sites/new"
+          className="flex items-center justify-center gap-2 w-full px-3 py-2.5 mb-3 rounded-xl bg-[#F2C46A] hover:bg-[#E5B555] text-[#2D2305] text-xs font-semibold shadow-sm transition-all"
+        >
+          <UploadCloud className="h-4 w-4" />
+          Deploy / Upload Site
+        </Link>
 
         {/* Back to User Dashboard */}
         <Link
