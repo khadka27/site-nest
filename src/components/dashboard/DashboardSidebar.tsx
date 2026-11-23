@@ -10,7 +10,6 @@ import {
   User,
   LogOut,
   Layers,
-  ExternalLink,
   Shield,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -38,19 +37,19 @@ export default function DashboardSidebar({ userRole }: DashboardSidebarProps) {
   ];
 
   return (
-    <aside className="w-64 border-r border-zinc-800/80 bg-zinc-950 flex flex-col justify-between p-4 shrink-0">
+    <aside className="w-64 border-r border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#1E1A17] flex flex-col justify-between p-4 shrink-0 transition-colors duration-200">
       <div>
         {/* Brand */}
-        <Link href="/" className="flex items-center gap-2.5 px-3 py-3 font-bold text-lg text-white mb-6">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600 text-white">
+        <Link href="/" className="flex items-center gap-2.5 px-3 py-3 font-bold text-lg text-[#4C4541] dark:text-[#FBF3E6] mb-6">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#F2C46A] text-[#2D2305]">
             <Layers className="h-4 w-4" />
           </div>
-          <span>Site<span className="text-indigo-400">Nest</span></span>
+          <span>Site<span className="text-[#AEAC78]">Nest</span></span>
         </Link>
 
         {/* Navigation list */}
         <div className="space-y-1">
-          <div className="px-3 pb-2 text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
+          <div className="px-3 pb-2 text-[11px] font-semibold uppercase tracking-wider text-[#7A6F68] dark:text-[#B5AAA0]">
             Control Panel
           </div>
           {navItems.map((item) => {
@@ -63,13 +62,13 @@ export default function DashboardSidebar({ userRole }: DashboardSidebarProps) {
                 className={cn(
                   "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
                   active
-                    ? "bg-indigo-600/15 text-indigo-400 border border-indigo-500/20"
+                    ? "bg-[#F2C46A]/25 dark:bg-[#F2C46A]/15 text-[#2D2305] dark:text-[#F2C46A] border border-[#F2C46A]/40 font-semibold"
                     : item.highlight
-                    ? "text-zinc-200 hover:bg-zinc-900 bg-zinc-900/60 border border-zinc-800"
-                    : "text-zinc-400 hover:text-white hover:bg-zinc-900"
+                    ? "text-[#4C4541] dark:text-[#FBF3E6] bg-[#F5E5C9]/80 dark:bg-[#24201C] border border-[#DECBB0] dark:border-[#3D352F] hover:bg-[#EAD6B5] dark:hover:bg-[#2D2823]"
+                    : "text-[#7A6F68] dark:text-[#B5AAA0] hover:text-[#4C4541] dark:hover:text-[#FBF3E6] hover:bg-[#F5E5C9]/50 dark:hover:bg-[#24201C]"
                 )}
               >
-                <Icon className={cn("h-4 w-4", active ? "text-indigo-400" : "text-zinc-400")} />
+                <Icon className={cn("h-4 w-4", active ? "text-[#5A5B35] dark:text-[#AEAC78]" : "text-[#7A6F68] dark:text-[#B5AAA0]")} />
                 {item.label}
               </Link>
             );
@@ -78,15 +77,15 @@ export default function DashboardSidebar({ userRole }: DashboardSidebarProps) {
 
         {/* Admin Link if role permits */}
         {(userRole === "ADMIN" || userRole === "SUPER_ADMIN") && (
-          <div className="mt-6 pt-6 border-t border-zinc-800/80">
-            <div className="px-3 pb-2 text-[11px] font-semibold uppercase tracking-wider text-purple-400">
+          <div className="mt-6 pt-6 border-t border-[#DECBB0] dark:border-[#3D352F]">
+            <div className="px-3 pb-2 text-[11px] font-semibold uppercase tracking-wider text-[#5A5B35] dark:text-[#AEAC78]">
               Administration
             </div>
             <Link
               href="/admin"
-              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-purple-300 hover:bg-purple-950/40 border border-purple-500/20 transition-colors"
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-[#4C4541] dark:text-[#FBF3E6] hover:bg-[#F5E5C9]/70 dark:hover:bg-[#24201C] border border-[#DECBB0] dark:border-[#3D352F] transition-colors"
             >
-              <Shield className="h-4 w-4 text-purple-400" />
+              <Shield className="h-4 w-4 text-[#AEAC78]" />
               Admin Portal
             </Link>
           </div>
@@ -94,17 +93,17 @@ export default function DashboardSidebar({ userRole }: DashboardSidebarProps) {
       </div>
 
       {/* Footer / Logout */}
-      <div className="pt-4 border-t border-zinc-800/80 space-y-1">
+      <div className="pt-4 border-t border-[#DECBB0] dark:border-[#3D352F] space-y-1">
         <Link
           href="/sites"
-          className="flex items-center justify-between px-3 py-2 rounded-lg text-xs text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors"
+          className="flex items-center justify-between px-3 py-2 rounded-lg text-xs text-[#7A6F68] dark:text-[#B5AAA0] hover:text-[#4C4541] dark:hover:text-[#FBF3E6] hover:bg-[#F5E5C9]/50 dark:hover:bg-[#24201C] transition-colors"
         >
-          <span>Public Directory</span>
-          <ExternalLink className="h-3.5 w-3.5" />
+          <span>Website Showcase</span>
+          <span className="text-[10px] font-mono text-[#AEAC78]">Public</span>
         </Link>
         <button
           onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-red-400 hover:bg-red-950/30 hover:text-red-300 transition-colors text-left"
+          className="flex w-full items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 transition-colors"
         >
           <LogOut className="h-4 w-4" />
           Sign Out

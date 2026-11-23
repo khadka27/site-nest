@@ -26,24 +26,27 @@ export default function FAQPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col font-sans">
+    <div className="min-h-screen bg-[#FCF0DA] dark:bg-[#171513] text-[#4C4541] dark:text-[#FBF3E6] flex flex-col font-sans transition-colors duration-200">
       <Navbar />
 
       <main className="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-8">
         <div className="text-center space-y-3">
-          <h1 className="text-4xl font-extrabold tracking-tight text-white">
+          <span className="text-xs font-bold uppercase tracking-widest text-[#5A5B35] dark:text-[#AEAC78]">
+            HELP & GUIDES
+          </span>
+          <h1 className="text-4xl font-extrabold tracking-tight text-[#4C4541] dark:text-[#FBF3E6]">
             Frequently Asked Questions
           </h1>
-          <p className="text-sm text-zinc-400">
+          <p className="text-sm text-[#7A6F68] dark:text-[#B5AAA0]">
             Everything you need to know about static site deployments on SiteNest.
           </p>
         </div>
 
         <div className="space-y-4">
           {faqs.map((f, idx) => (
-            <div key={idx} className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6 space-y-2">
-              <h3 className="text-base font-semibold text-white">{f.q}</h3>
-              <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">{f.a}</p>
+            <div key={idx} className="rounded-2xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#24201C] p-6 space-y-2 shadow-sm">
+              <h3 className="text-base font-semibold text-[#4C4541] dark:text-[#FBF3E6]">{f.q}</h3>
+              <p className="text-xs sm:text-sm text-[#7A6F68] dark:text-[#B5AAA0] leading-relaxed">{f.a}</p>
             </div>
           ))}
         </div>

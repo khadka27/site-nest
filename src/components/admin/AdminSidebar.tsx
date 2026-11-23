@@ -62,17 +62,17 @@ export default function AdminSidebar() {
   ];
 
   return (
-    <aside className="w-64 border-r border-zinc-800/80 bg-zinc-950 flex flex-col justify-between p-4 shrink-0 overflow-y-auto">
+    <aside className="w-64 border-r border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#1E1A17] flex flex-col justify-between p-4 shrink-0 overflow-y-auto transition-colors duration-200">
       <div>
         {/* Admin Header */}
         <div className="flex items-center justify-between px-3 py-2 mb-4">
-          <Link href="/" className="flex items-center gap-2 font-bold text-lg text-white">
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-purple-600 text-white">
+          <Link href="/" className="flex items-center gap-2 font-bold text-lg text-[#4C4541] dark:text-[#FBF3E6]">
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#F2C46A] text-[#2D2305]">
               <Layers className="h-4 w-4" />
             </div>
-            <span>Site<span className="text-purple-400">Admin</span></span>
+            <span>Site<span className="text-[#AEAC78]">Admin</span></span>
           </Link>
-          <span className="text-[10px] font-mono uppercase bg-purple-500/20 text-purple-300 px-1.5 py-0.5 rounded">
+          <span className="text-[10px] font-mono uppercase bg-[#AEAC78]/20 text-[#5A5B35] dark:text-[#AEAC78] px-1.5 py-0.5 rounded font-semibold">
             v1.0
           </span>
         </div>
@@ -80,7 +80,7 @@ export default function AdminSidebar() {
         {/* Back to User Dashboard */}
         <Link
           href="/dashboard"
-          className="flex items-center gap-2 px-3 py-2 mb-4 rounded-lg text-xs font-medium text-zinc-400 hover:text-white bg-zinc-900 border border-zinc-800 transition-colors"
+          className="flex items-center gap-2 px-3 py-2 mb-4 rounded-lg text-xs font-medium text-[#7A6F68] dark:text-[#B5AAA0] hover:text-[#4C4541] dark:hover:text-[#FBF3E6] bg-[#F5E5C9]/60 dark:bg-[#24201C] border border-[#DECBB0] dark:border-[#3D352F] transition-colors"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
           Back to Dashboard
@@ -90,7 +90,7 @@ export default function AdminSidebar() {
         <div className="space-y-5">
           {navSections.map((section) => (
             <div key={section.title}>
-              <div className="px-3 pb-1.5 text-[10px] font-semibold uppercase tracking-wider text-zinc-500">
+              <div className="px-3 pb-1.5 text-[10px] font-semibold uppercase tracking-wider text-[#7A6F68] dark:text-[#B5AAA0]">
                 {section.title}
               </div>
               <div className="space-y-0.5">
@@ -102,13 +102,13 @@ export default function AdminSidebar() {
                       key={item.href}
                       href={item.href}
                       className={cn(
-                        "flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium transition-colors",
+                        "flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-colors",
                         active
-                          ? "bg-purple-600/20 text-purple-300 border border-purple-500/30"
-                          : "text-zinc-400 hover:text-white hover:bg-zinc-900"
+                          ? "bg-[#F2C46A]/25 dark:bg-[#F2C46A]/15 text-[#2D2305] dark:text-[#F2C46A] border border-[#F2C46A]/40 font-semibold"
+                          : "text-[#7A6F68] dark:text-[#B5AAA0] hover:text-[#4C4541] dark:hover:text-[#FBF3E6] hover:bg-[#F5E5C9]/70 dark:hover:bg-[#24201C]"
                       )}
                     >
-                      <Icon className={cn("h-4 w-4", active ? "text-purple-400" : "text-zinc-500")} />
+                      <Icon className={cn("h-4 w-4", active ? "text-[#5A5B35] dark:text-[#AEAC78]" : "text-[#7A6F68] dark:text-[#B5AAA0]")} />
                       {item.label}
                     </Link>
                   );
@@ -119,11 +119,11 @@ export default function AdminSidebar() {
         </div>
       </div>
 
-      {/* Logout */}
-      <div className="pt-4 mt-6 border-t border-zinc-800/80">
+      {/* Logout button */}
+      <div className="pt-4 border-t border-[#DECBB0] dark:border-[#3D352F]">
         <button
           onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-red-400 hover:bg-red-950/30 hover:text-red-300 transition-colors text-left"
+          className="flex w-full items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 transition-colors"
         >
           <LogOut className="h-4 w-4" />
           Sign Out
