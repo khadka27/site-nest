@@ -1,8 +1,10 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { prisma } from "@/lib/prisma";
+import { getSession } from "@/lib/auth";
+import { isAdmin } from "@/lib/permissions";
 import {
   ExternalLink,
   ArrowLeft,
@@ -10,7 +12,6 @@ import {
   Leaf,
   FlaskConical,
   Award,
-  Sparkle,
   Layers,
 } from "lucide-react";
 import { formatBytes, formatDate } from "@/lib/utils";
@@ -43,6 +44,12 @@ export default async function ProductDetailPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  // If an authenticated admin accesses the public product page, redirect to the Admin Portal
+  const session = await getSession();
+  if (session && isAdmin(session.role)) {
+    redirect("/admin");
+  }
+
   const { slug } = await params;
 
   const product = await prisma.website.findFirst({

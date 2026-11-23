@@ -21,6 +21,7 @@ interface DashboardSidebarProps {
 export default function DashboardSidebar({ userRole }: DashboardSidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
+  const isAdminUser = userRole === "ADMIN" || userRole === "SUPER_ADMIN";
 
   const handleLogout = async () => {
     await fetch("/api/auth/logout", { method: "POST" });
@@ -31,7 +32,9 @@ export default function DashboardSidebar({ userRole }: DashboardSidebarProps) {
   const navItems = [
     { label: "Overview", href: "/dashboard", icon: LayoutDashboard },
     { label: "My Websites", href: "/dashboard/sites", icon: FolderGit2 },
-    { label: "Deploy New Site", href: "/dashboard/sites/new", icon: UploadCloud, highlight: true },
+    ...(isAdminUser
+      ? [{ label: "Deploy New Site", href: "/dashboard/sites/new", icon: UploadCloud, highlight: true }]
+      : []),
     { label: "Account Settings", href: "/dashboard/settings", icon: Settings },
     { label: "User Profile", href: "/dashboard/profile", icon: User },
   ];
@@ -39,12 +42,15 @@ export default function DashboardSidebar({ userRole }: DashboardSidebarProps) {
   return (
     <aside className="w-64 border-r border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#1E1A17] flex flex-col justify-between p-4 shrink-0 transition-colors duration-200">
       <div>
-        {/* Brand */}
-        <Link href="/" className="flex items-center gap-2.5 px-3 py-3 font-bold text-lg text-[#4C4541] dark:text-[#FBF3E6] mb-6">
+        {/* Brand: Admin links to /admin; viewer links to /dashboard */}
+        <Link
+          href={isAdminUser ? "/admin" : "/dashboard"}
+          className="flex items-center gap-2.5 px-3 py-3 font-bold text-lg text-[#4C4541] dark:text-[#FBF3E6] mb-6"
+        >
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#F2C46A] text-[#2D2305]">
             <Layers className="h-4 w-4" />
           </div>
-          <span>Site<span className="text-[#AEAC78]">Nest</span></span>
+          <span>Site<span className="text-[#AEAC78]">{isAdminUser ? "Admin" : "Nest"}</span></span>
         </Link>
 
         {/* Navigation list */}
@@ -76,7 +82,7 @@ export default function DashboardSidebar({ userRole }: DashboardSidebarProps) {
         </div>
 
         {/* Admin Link if role permits */}
-        {(userRole === "ADMIN" || userRole === "SUPER_ADMIN") && (
+        {isAdminUser && (
           <div className="mt-6 pt-6 border-t border-[#DECBB0] dark:border-[#3D352F]">
             <div className="px-3 pb-2 text-[11px] font-semibold uppercase tracking-wider text-[#5A5B35] dark:text-[#AEAC78]">
               Administration
@@ -94,16 +100,26 @@ export default function DashboardSidebar({ userRole }: DashboardSidebarProps) {
 
       {/* Footer / Logout */}
       <div className="pt-4 border-t border-[#DECBB0] dark:border-[#3D352F] space-y-1">
-        <Link
-          href="/sites"
-          className="flex items-center justify-between px-3 py-2 rounded-lg text-xs text-[#7A6F68] dark:text-[#B5AAA0] hover:text-[#4C4541] dark:hover:text-[#FBF3E6] hover:bg-[#F5E5C9]/50 dark:hover:bg-[#24201C] transition-colors"
-        >
-          <span>Website Showcase</span>
-          <span className="text-[10px] font-mono text-[#AEAC78]">Public</span>
-        </Link>
+        {isAdminUser ? (
+          <Link
+            href="/admin"
+            className="flex items-center justify-between px-3 py-2 rounded-lg text-xs text-[#5A5B35] dark:text-[#AEAC78] font-semibold hover:bg-[#F5E5C9]/50 dark:hover:bg-[#24201C] transition-colors"
+          >
+            <span>Admin Center</span>
+            <span className="text-[10px] font-mono text-[#AEAC78]">Portal</span>
+          </Link>
+        ) : (
+          <Link
+            href="/products"
+            className="flex items-center justify-between px-3 py-2 rounded-lg text-xs text-[#7A6F68] dark:text-[#B5AAA0] hover:text-[#4C4541] dark:hover:text-[#FBF3E6] hover:bg-[#F5E5C9]/50 dark:hover:bg-[#24201C] transition-colors"
+          >
+            <span>Product Catalog</span>
+            <span className="text-[10px] font-mono text-[#AEAC78]">Public</span>
+          </Link>
+        )}
         <button
           onClick={handleLogout}
-          className="flex w-full items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 transition-colors"
+          className="flex w-full items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 transition-colors cursor-pointer"
         >
           <LogOut className="h-4 w-4" />
           Sign Out

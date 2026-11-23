@@ -65,9 +65,9 @@ export default function AdminSidebar() {
   return (
     <aside className="w-64 border-r border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#1E1A17] flex flex-col justify-between p-4 shrink-0 overflow-y-auto transition-colors duration-200">
       <div>
-        {/* Admin Header */}
+        {/* Admin Header - Links to /admin, NOT public home */}
         <div className="flex items-center justify-between px-3 py-2 mb-3">
-          <Link href="/" className="flex items-center gap-2 font-bold text-lg text-[#4C4541] dark:text-[#FBF3E6]">
+          <Link href="/admin" className="flex items-center gap-2 font-bold text-lg text-[#4C4541] dark:text-[#FBF3E6]">
             <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#F2C46A] text-[#2D2305]">
               <Layers className="h-4 w-4" />
             </div>
@@ -133,7 +133,7 @@ export default function AdminSidebar() {
       <div className="pt-4 border-t border-[#DECBB0] dark:border-[#3D352F]">
         <button
           onClick={handleLogout}
-          className="flex w-full items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 transition-colors"
+          className="flex w-full items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 transition-colors cursor-pointer"
         >
           <LogOut className="h-4 w-4" />
           Sign Out

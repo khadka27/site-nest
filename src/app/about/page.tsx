@@ -1,6 +1,9 @@
+import { redirect } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { Leaf, ShieldCheck, Zap, Globe, Compass, Award } from "lucide-react";
+import { getSession } from "@/lib/auth";
+import { isAdmin } from "@/lib/permissions";
+import { Leaf, ShieldCheck, Zap, Globe, Award } from "lucide-react";
 
 export const metadata = {
   title: "Botanical Philosophy & Purity Standards — SiteNest Botanicals",
@@ -8,7 +11,13 @@ export const metadata = {
     "Learn about our botanical extraction philosophy, clean sourcing commitments, and our standard of deploying an independent, uncompromised research microsite for every product.",
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  // If an authenticated admin accesses the public about page, redirect to the Admin Portal
+  const session = await getSession();
+  if (session && isAdmin(session.role)) {
+    redirect("/admin");
+  }
+
   return (
     <div className="min-h-screen bg-[#FCF0DA] dark:bg-[#171513] text-[#4C4541] dark:text-[#FBF3E6] flex flex-col font-sans transition-colors duration-200">
       <Navbar />
