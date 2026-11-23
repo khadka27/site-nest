@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Users, Shield, ShieldAlert, Check, Loader2 } from "lucide-react";
 import { formatDate } from "@/lib/utils";
+import CustomSelect from "@/components/ui/CustomSelect";
 
 interface UserItem {
   id: string;
@@ -111,16 +112,19 @@ export default function AdminUsersPage() {
                   </span>
                 </td>
                 <td className="px-5 py-4 text-right">
-                  <select
-                    disabled={updatingId === u.id}
-                    value={u.role}
-                    onChange={(e) => handleChangeRole(u.id, e.target.value)}
-                    className="rounded-lg border border-zinc-700 bg-zinc-900 px-2.5 py-1 text-xs text-white focus:border-purple-500 focus:outline-none"
-                  >
-                    <option value="USER">USER</option>
-                    <option value="ADMIN">ADMIN</option>
-                    <option value="SUPER_ADMIN">SUPER_ADMIN</option>
-                  </select>
+                  <div className="w-36 ml-auto">
+                    <CustomSelect
+                      disabled={updatingId === u.id}
+                      value={u.role}
+                      onChange={(newRole) => handleChangeRole(u.id, newRole)}
+                      placeholder=""
+                      options={[
+                        { value: "USER", label: "USER" },
+                        { value: "ADMIN", label: "ADMIN" },
+                        { value: "SUPER_ADMIN", label: "SUPER_ADMIN" },
+                      ]}
+                    />
+                  </div>
                 </td>
               </tr>
             ))}

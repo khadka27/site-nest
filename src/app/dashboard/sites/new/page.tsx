@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
+import CustomSelect from "@/components/ui/CustomSelect";
 import {
   UploadCloud,
   FileArchive,
@@ -285,18 +286,15 @@ export default function NewWebsitePage() {
                 <label className="text-xs font-semibold uppercase tracking-wider text-[#4C4541] dark:text-[#FBF3E6]">
                   Category
                 </label>
-                <select
+                <CustomSelect
                   value={categoryId}
-                  onChange={(e) => setCategoryId(e.target.value)}
-                  className="w-full rounded-xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FCF0DA]/50 dark:bg-[#1E1A17] px-3.5 py-2.5 text-sm text-[#4C4541] dark:text-[#FBF3E6] focus:border-[#AEAC78] focus:outline-none"
-                >
-                  <option value="">Select a category...</option>
-                  {categories.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {c.name}
-                    </option>
-                  ))}
-                </select>
+                  onChange={(val) => setCategoryId(val)}
+                  placeholder="Select a category..."
+                  options={categories.map((c) => ({
+                    value: c.id,
+                    label: c.name,
+                  }))}
+                />
               </div>
             </div>
 
