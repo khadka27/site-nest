@@ -43,19 +43,16 @@ export default function Navbar() {
         {/* Desktop Navigation Links */}
         <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-[#7A6F68] dark:text-[#B5AAA0]">
           <Link href="/sites" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6] transition-colors">
-            Showcase
+            Showcase Directory
           </Link>
-          <Link href="/#features" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6] transition-colors">
-            Features
+          <Link href="/#showcase" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6] transition-colors">
+            Featured
           </Link>
-          <Link href="/#how-it-works" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6] transition-colors">
-            Architecture
-          </Link>
-          <Link href="/pricing" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6] transition-colors">
-            Pricing
+          <Link href="/#categories" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6] transition-colors">
+            Collections
           </Link>
           <Link href="/about" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6] transition-colors">
-            About
+            Philosophy
           </Link>
           <Link href="/faq" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6] transition-colors">
             FAQ
@@ -91,14 +88,14 @@ export default function Navbar() {
                 className="inline-flex items-center gap-1.5 rounded-xl px-3.5 py-1.5 text-xs font-semibold text-[#4C4541] dark:text-[#FBF3E6] border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#24201C] hover:bg-[#F5E5C9] dark:hover:bg-[#2C2723] transition-colors"
               >
                 <Compass className="h-3.5 w-3.5 text-[#AEAC78] dark:text-[#F2C46A]" />
-                Explore Sites
+                Explore Directory
               </Link>
               <Link
                 href="/login"
                 className="inline-flex items-center gap-1.5 rounded-xl bg-[#4C4541] dark:bg-[#F2C46A] px-4 py-1.5 text-xs font-semibold text-[#FCF0DA] dark:text-[#171513] hover:opacity-90 transition-opacity shadow-sm"
               >
                 <Shield className="h-3.5 w-3.5" />
-                Admin Sign In
+                Admin Portal
               </Link>
             </div>
           )}
@@ -121,13 +118,16 @@ export default function Navbar() {
       {mobileMenuOpen && (
         <div className="md:hidden border-b border-[#DECBB0] dark:border-[#3D352F] bg-[#FCF0DA] dark:bg-[#171513] px-5 pt-3 pb-6 space-y-3">
           <Link href="/sites" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-sm font-medium text-[#4C4541] dark:text-[#FBF3E6]">
-            Showcase
+            Showcase Directory
           </Link>
-          <Link href="/pricing" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-sm font-medium text-[#4C4541] dark:text-[#FBF3E6]">
-            Pricing
+          <Link href="/#showcase" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-sm font-medium text-[#4C4541] dark:text-[#FBF3E6]">
+            Featured Sites
+          </Link>
+          <Link href="/#categories" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-sm font-medium text-[#4C4541] dark:text-[#FBF3E6]">
+            Collections
           </Link>
           <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-sm font-medium text-[#4C4541] dark:text-[#FBF3E6]">
-            About
+            Philosophy
           </Link>
           <Link href="/faq" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-sm font-medium text-[#4C4541] dark:text-[#FBF3E6]">
             FAQ
@@ -159,7 +159,7 @@ export default function Navbar() {
                   className="flex items-center justify-center gap-2 rounded-xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#24201C] text-[#4C4541] dark:text-[#FBF3E6] py-2.5 text-xs font-semibold"
                 >
                   <Compass className="h-4 w-4 text-[#AEAC78] dark:text-[#F2C46A]" />
-                  Explore Sites
+                  Explore Directory
                 </Link>
                 <Link
                   href="/login"
@@ -167,7 +167,7 @@ export default function Navbar() {
                   className="flex items-center justify-center gap-2 rounded-xl bg-[#4C4541] dark:bg-[#F2C46A] text-[#FCF0DA] dark:text-[#171513] py-2.5 text-xs font-semibold"
                 >
                   <Shield className="h-4 w-4" />
-                  Admin Sign In
+                  Admin Portal
                 </Link>
               </>
             )}
