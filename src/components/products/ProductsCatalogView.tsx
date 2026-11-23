@@ -591,20 +591,20 @@ export default function ProductsCatalogView({
 
                     {/* Dual Action Buttons matching reference UI */}
                     <div className="mt-5 pt-4 border-t border-[#DECBB0] dark:border-[#3D352F] grid grid-cols-2 gap-2.5">
-                      {/* Button 1: "Lab Specs" (Outline pill) */}
+                      {/* Button 1: "Lab Specs" (Outline pill with high-contrast hover) */}
                       <Link
                         href={`/products/${product.slug}`}
-                        className="rounded-full border border-[#DECBB0] dark:border-[#3D352F] bg-white dark:bg-[#171513] hover:bg-[#FCF0DA] dark:hover:bg-[#201C19] text-[#4C4541] dark:text-[#FBF3E6] py-2.5 px-3 text-xs font-semibold text-center transition-all shadow-sm"
+                        className="rounded-full border border-[#DECBB0] dark:border-[#3D352F] bg-white dark:bg-[#201C19] text-[#4C4541] dark:text-[#FBF3E6] hover:bg-[#171513] hover:text-[#FCF0DA] hover:border-[#171513] dark:hover:bg-[#F2C46A] dark:hover:text-[#171513] dark:hover:border-[#F2C46A] py-2.5 px-3 text-xs font-semibold text-center transition-all duration-200 shadow-sm cursor-pointer"
                       >
                         Lab Specs
                       </Link>
 
-                      {/* Button 2: "Visit Microsite" (Solid dark / amber pill) */}
+                      {/* Button 2: "Visit Microsite" (Solid dark / amber pill with active hover) */}
                       <a
                         href={`/s/${product.subdomain}`}
                         target="_blank"
                         rel="noreferrer"
-                        className="rounded-full bg-[#171513] hover:bg-[#2D2823] dark:bg-[#F2C46A] dark:hover:bg-[#E5B555] text-[#FCF0DA] dark:text-[#171513] py-2.5 px-3 text-xs font-semibold text-center transition-all shadow-sm inline-flex items-center justify-center gap-1"
+                        className="rounded-full border border-[#171513] dark:border-[#F2C46A] bg-[#171513] dark:bg-[#F2C46A] text-[#FCF0DA] dark:text-[#171513] hover:bg-[#2D2823] hover:border-[#2D2823] hover:text-white dark:hover:bg-[#E5B555] dark:hover:border-[#E5B555] dark:hover:text-black py-2.5 px-3 text-xs font-semibold text-center transition-all duration-200 shadow-sm inline-flex items-center justify-center gap-1 cursor-pointer"
                       >
                         <span>Visit Site</span>
                         <ExternalLink className="h-3 w-3" />
@@ -660,14 +660,14 @@ export default function ProductsCatalogView({
             <button
               onClick={() => scrollCarousel("left")}
               aria-label="Previous recommendation"
-              className="h-9 w-9 rounded-full border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#1E1A17] flex items-center justify-center text-[#4C4541] dark:text-[#FBF3E6] hover:border-[#AEAC78] transition-colors cursor-pointer shadow-sm"
+              className="h-9 w-9 rounded-full border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#1E1A17] flex items-center justify-center text-[#4C4541] dark:text-[#FBF3E6] hover:bg-[#171513] hover:text-[#FCF0DA] hover:border-[#171513] dark:hover:bg-[#F2C46A] dark:hover:text-[#171513] dark:hover:border-[#F2C46A] transition-all cursor-pointer shadow-sm"
             >
               <ArrowLeft className="h-4 w-4" />
             </button>
             <button
               onClick={() => scrollCarousel("right")}
               aria-label="Next recommendation"
-              className="h-9 w-9 rounded-full border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#1E1A17] flex items-center justify-center text-[#4C4541] dark:text-[#FBF3E6] hover:border-[#AEAC78] transition-colors cursor-pointer shadow-sm"
+              className="h-9 w-9 rounded-full border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#1E1A17] flex items-center justify-center text-[#4C4541] dark:text-[#FBF3E6] hover:bg-[#171513] hover:text-[#FCF0DA] hover:border-[#171513] dark:hover:bg-[#F2C46A] dark:hover:text-[#171513] dark:hover:border-[#F2C46A] transition-all cursor-pointer shadow-sm"
             >
               <ArrowRight className="h-4 w-4" />
             </button>
@@ -690,7 +690,7 @@ export default function ProductsCatalogView({
             return (
               <div
                 key={`rec-${item.id}`}
-                className="w-72 shrink-0 rounded-3xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#1E1A17] p-4 flex flex-col justify-between shadow-sm hover:border-[#AEAC78] transition-all"
+                className="group w-72 shrink-0 rounded-3xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#1E1A17] p-4 flex flex-col justify-between shadow-sm hover:border-[#AEAC78] dark:hover:border-[#AEAC78] transition-all duration-300 hover:shadow-md"
               >
                 <div className="space-y-3">
                   <div className="relative aspect-[4/3] w-full rounded-2xl bg-[#FCF0DA]/60 dark:bg-[#171513] border border-[#DECBB0]/70 dark:border-[#3D352F]/70 overflow-hidden flex items-center justify-center p-3">
@@ -701,12 +701,12 @@ export default function ProductsCatalogView({
                       <img
                         src={item.imageUrl}
                         alt={item.name}
-                        className="h-full w-full object-contain"
+                        className="h-full w-full object-contain group-hover:scale-105 transition-transform duration-300"
                       />
                     )}
                   </div>
 
-                  <h4 className="text-sm font-bold text-[#4C4541] dark:text-[#FBF3E6] truncate">
+                  <h4 className="text-sm font-bold text-[#4C4541] dark:text-[#FBF3E6] group-hover:text-[#5A5B35] dark:group-hover:text-[#AEAC78] transition-colors truncate">
                     {item.name}
                   </h4>
 
@@ -722,17 +722,20 @@ export default function ProductsCatalogView({
                 </div>
 
                 <div className="mt-4 pt-3 border-t border-[#DECBB0] dark:border-[#3D352F] grid grid-cols-2 gap-2 text-[11px]">
+                  {/* Button 1: "Specs" (Outline pill with high-contrast hover) */}
                   <Link
                     href={`/products/${item.slug}`}
-                    className="rounded-full border border-[#DECBB0] dark:border-[#3D352F] bg-white dark:bg-[#171513] py-2 px-2 font-semibold text-center text-[#4C4541] dark:text-[#FBF3E6] hover:bg-[#FCF0DA] transition-colors"
+                    className="rounded-full border border-[#DECBB0] dark:border-[#3D352F] bg-white dark:bg-[#201C19] text-[#4C4541] dark:text-[#FBF3E6] hover:bg-[#171513] hover:text-[#FCF0DA] hover:border-[#171513] dark:hover:bg-[#F2C46A] dark:hover:text-[#171513] dark:hover:border-[#F2C46A] py-2 px-2 font-semibold text-center transition-all duration-200 shadow-sm cursor-pointer"
                   >
                     Specs
                   </Link>
+
+                  {/* Button 2: "Microsite" (Solid pill with active hover) */}
                   <a
                     href={`/s/${item.subdomain}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="rounded-full bg-[#171513] dark:bg-[#F2C46A] text-[#FCF0DA] dark:text-[#171513] py-2 px-2 font-semibold text-center transition-colors inline-flex items-center justify-center gap-1"
+                    className="rounded-full border border-[#171513] dark:border-[#F2C46A] bg-[#171513] dark:bg-[#F2C46A] text-[#FCF0DA] dark:text-[#171513] hover:bg-[#2D2823] hover:border-[#2D2823] hover:text-white dark:hover:bg-[#E5B555] dark:hover:border-[#E5B555] dark:hover:text-black py-2 px-2 font-semibold text-center transition-all duration-200 shadow-sm inline-flex items-center justify-center gap-1 cursor-pointer"
                   >
                     <span>Microsite</span>
                     <ExternalLink className="h-2.5 w-2.5" />
