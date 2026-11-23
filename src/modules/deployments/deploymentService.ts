@@ -2,6 +2,7 @@ import path from "path";
 import fs from "fs/promises";
 import fsSync from "fs";
 import AdmZip from "adm-zip";
+import sharp from "sharp";
 import { prisma } from "@/lib/prisma";
 import {
   ensureStorageDirectories,
@@ -18,6 +19,87 @@ export class DeploymentError extends Error {
     super(message);
     this.name = "DeploymentError";
   }
+}
+
+/**
+ * Scans extracted static assets in the deployment directory,
+ * auto-compresses all raster images (.png, .jpg, .jpeg, .tiff, .bmp)
+ * and converts them to high-efficiency .webp format.
+ * Also rewrites references in index.html to point to the new .webp images.
+ */
+async function processExtractedImages(destDir: string): Promise<{ convertedCount: number; savedBytes: number }> {
+  let convertedCount = 0;
+  let savedBytes = 0;
+
+  async function walkDir(currentDir: string) {
+    let entries;
+    try {
+      entries = await fs.readdir(currentDir, { withFileTypes: true });
+    } catch {
+      return;
+    }
+
+    for (const entry of entries) {
+      const fullPath = path.join(currentDir, entry.name);
+      if (entry.isDirectory()) {
+        await walkDir(fullPath);
+      } else if (entry.isFile()) {
+        const ext = path.extname(entry.name).toLowerCase();
+        if ([".png", ".jpg", ".jpeg", ".tiff", ".bmp"].includes(ext)) {
+          try {
+            const originalStats = await fs.stat(fullPath);
+            const baseName = entry.name.slice(0, -ext.length);
+            const webpPath = path.join(currentDir, `${baseName}.webp`);
+
+            // Convert to auto-compressed WebP
+            const image = sharp(fullPath);
+            const metadata = await image.metadata();
+
+            let pipeline = image;
+            // Downscale oversized images (> 1920px) proportionally
+            if (metadata.width && metadata.width > 1920) {
+              pipeline = pipeline.resize({ width: 1920, withoutEnlargement: true });
+            }
+
+            await pipeline
+              .webp({ quality: 80, effort: 4 })
+              .toFile(webpPath);
+
+            const webpStats = await fs.stat(webpPath);
+            convertedCount++;
+            if (originalStats.size > webpStats.size) {
+              savedBytes += (originalStats.size - webpStats.size);
+            }
+          } catch (imgErr) {
+            console.warn(`Could not optimize image ${entry.name}:`, imgErr);
+          }
+        }
+      }
+    }
+  }
+
+  await walkDir(destDir);
+
+  // If WebP images were created, update index.html references to use .webp where applicable
+  try {
+    const indexPath = path.join(destDir, "index.html");
+    if (fsSync.existsSync(indexPath)) {
+      let html = await fs.readFile(indexPath, "utf8");
+      html = html.replace(/(src|href)=["']([^"']+\.(?:png|jpg|jpeg))["']/gi, (match, attr, imgPath) => {
+        const localImgPath = path.resolve(destDir, imgPath.replace(/^\//, ""));
+        const webpLocalPath = localImgPath.replace(/\.(?:png|jpg|jpeg)$/i, ".webp");
+        if (fsSync.existsSync(webpLocalPath)) {
+          return `${attr}="${imgPath.replace(/\.(?:png|jpg|jpeg)$/i, ".webp")}"`;
+        }
+        return match;
+      });
+      await fs.writeFile(indexPath, html, "utf8");
+    }
+  } catch (htmlErr) {
+    console.warn("Could not rewrite index.html image references:", htmlErr);
+  }
+
+  return { convertedCount, savedBytes };
 }
 
 /**
@@ -106,6 +188,9 @@ export async function executeDeployment(deploymentId: string): Promise<{ success
       await fs.writeFile(filePath, entry.getData());
     }
 
+    // Process & Auto-compress extracted images to WebP
+    const imageOptimization = await processExtractedImages(destDir);
+
     // Double check index.html exists in destination directory
     const indexFile = path.join(destDir, "index.html");
     if (!fsSync.existsSync(indexFile)) {
@@ -171,6 +256,8 @@ export async function executeDeployment(deploymentId: string): Promise<{ success
         subdomain: website.subdomain,
         version: deployment.version,
         filesCount: validation.filesCount,
+        imagesConverted: imageOptimization.convertedCount,
+        savedBytes: imageOptimization.savedBytes,
       },
     });
 

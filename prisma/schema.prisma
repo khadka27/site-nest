@@ -65,6 +65,7 @@ model Website {
   slug               String        @unique
   subdomain          String        @unique
   description        String?
+  imageUrl           String?
   status             WebsiteStatus @default(DRAFT)
   activeDeploymentId String?
   storagePath        String?

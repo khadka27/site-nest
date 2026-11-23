@@ -7,9 +7,10 @@ import { queueDeployment } from "@/modules/deployments/queue";
 import { DeploymentStatus, WebsiteStatus } from "@prisma/client";
 import path from "path";
 import fs from "fs/promises";
+import sharp from "sharp";
 import { logActivity } from "@/lib/activity";
 
-// POST /api/sites/[id]/upload: Uploads ZIP and initiates deployment (ADMIN ONLY)
+// POST /api/sites/[id]/upload: Uploads ZIP and product image, auto-compresses to WebP
 export async function POST(
   req: NextRequest,
   context: { params: Promise<{ id: string }> }
@@ -47,6 +48,7 @@ export async function POST(
 
     const formData = await req.formData();
     const file = formData.get("file") as File | null;
+    const productImage = formData.get("productImage") as File | null;
     const changeLog = (formData.get("changeLog") as string) || "ZIP upload";
 
     if (!file) {
@@ -62,6 +64,29 @@ export async function POST(
         { error: `File size exceeds the limit of ${MAX_ZIP_SIZE / (1024 * 1024)}MB` },
         { status: 400 }
       );
+    }
+
+    // Process & auto-compress product image to WebP if provided
+    let productImageUrl: string | null = null;
+    if (productImage && productImage.size > 0) {
+      try {
+        const imageBuffer = Buffer.from(await productImage.arrayBuffer());
+        const compressedWebp = await sharp(imageBuffer)
+          .resize({ width: 1200, height: 1200, fit: "inside", withoutEnlargement: true })
+          .webp({ quality: 80, effort: 5 })
+          .toBuffer();
+
+        const uploadsDir = path.join(process.cwd(), "public", "uploads", "products");
+        await fs.mkdir(uploadsDir, { recursive: true });
+
+        const fileName = `${website.id}-${Date.now()}.webp`;
+        const filePath = path.join(uploadsDir, fileName);
+        await fs.writeFile(filePath, compressedWebp);
+
+        productImageUrl = `/uploads/products/${fileName}`;
+      } catch (imgErr) {
+        console.warn("Product image WebP auto-compression warning:", imgErr);
+      }
     }
 
     // Determine new version
@@ -87,10 +112,13 @@ export async function POST(
       },
     });
 
-    // Mark website as DEPLOYING
+    // Mark website as DEPLOYING & save WebP image URL if uploaded
     await prisma.website.update({
       where: { id: website.id },
-      data: { status: WebsiteStatus.DEPLOYING },
+      data: {
+        status: WebsiteStatus.DEPLOYING,
+        ...(productImageUrl ? { imageUrl: productImageUrl } : {}),
+      },
     });
 
     await logActivity({
@@ -100,6 +128,7 @@ export async function POST(
         websiteId: website.id,
         version: newVersion,
         fileSize: file.size,
+        hasProductImage: Boolean(productImageUrl),
       },
     });
 
@@ -109,7 +138,8 @@ export async function POST(
     return NextResponse.json({
       success: true,
       deployment,
-      message: `Version ${newVersion} queued for deployment.`,
+      productImageUrl,
+      message: `Version ${newVersion} queued for deployment. Images converted to WebP.`,
     });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Internal error";

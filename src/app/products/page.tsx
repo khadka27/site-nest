@@ -182,6 +182,20 @@ export default async function ProductsCatalogPage({
                       {product.name}
                     </h3>
 
+                    {/* Product WebP Image */}
+                    {product.imageUrl && (
+                      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-[#FCF0DA]/60 dark:bg-[#1E1A17] border border-[#DECBB0] dark:border-[#3D352F]">
+                        <img
+                          src={product.imageUrl}
+                          alt={product.name}
+                          className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                        <span className="absolute bottom-2 right-2 text-[10px] font-mono bg-[#171513]/80 text-[#AEAC78] px-2 py-0.5 rounded backdrop-blur-sm border border-[#AEAC78]/30">
+                          WebP
+                        </span>
+                      </div>
+                    )}
+
                     {/* Dedicated Subdomain Badge */}
                     <div className="flex items-center gap-2 font-mono text-xs text-[#5A5B35] dark:text-[#AEAC78] bg-[#FCF0DA]/60 dark:bg-[#1E1A17] px-3 py-1.5 rounded-lg border border-[#DECBB0] dark:border-[#3D352F]">
                       <span className="truncate">{product.subdomain}.sitenest.com</span>

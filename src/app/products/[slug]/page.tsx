@@ -89,40 +89,51 @@ export default async function ProductDetailPage({
         </Link>
 
         {/* Product Hero Header */}
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 border-b border-[#DECBB0] dark:border-[#3D352F] pb-8">
-          <div className="space-y-3 max-w-3xl">
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#2D2305] dark:text-[#F2C46A] bg-[#F2C46A]/30 dark:bg-[#F2C46A]/10 px-3 py-1 rounded-full border border-[#F2C46A]/50">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#AEAC78]" />
-                Live Formulation
-              </span>
-              {product.category && (
-                <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#5A5B35] dark:text-[#AEAC78] bg-[#FFF8ED] dark:bg-[#24201C] px-3 py-1 rounded-full border border-[#DECBB0] dark:border-[#3D352F]">
-                  <Leaf className="h-3.5 w-3.5 text-[#AEAC78]" />
-                  {product.category.name}
+        <div className="flex flex-col lg:flex-row gap-8 border-b border-[#DECBB0] dark:border-[#3D352F] pb-8 items-start justify-between">
+          <div className="flex flex-col sm:flex-row gap-6 items-start flex-1">
+            {product.imageUrl && (
+              <div className="w-full sm:w-64 aspect-[4/3] rounded-2xl overflow-hidden bg-[#FCF0DA]/60 dark:bg-[#1E1A17] border border-[#DECBB0] dark:border-[#3D352F] shrink-0 shadow-sm relative">
+                <img src={product.imageUrl} alt={product.name} className="h-full w-full object-cover" />
+                <span className="absolute bottom-2 right-2 text-[10px] font-mono bg-[#171513]/85 text-[#AEAC78] px-2 py-0.5 rounded border border-[#AEAC78]/30">
+                  WebP Compressed
                 </span>
+              </div>
+            )}
+
+            <div className="space-y-3 flex-1">
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#2D2305] dark:text-[#F2C46A] bg-[#F2C46A]/30 dark:bg-[#F2C46A]/10 px-3 py-1 rounded-full border border-[#F2C46A]/50">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#AEAC78]" />
+                  Live Formulation
+                </span>
+                {product.category && (
+                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#5A5B35] dark:text-[#AEAC78] bg-[#FFF8ED] dark:bg-[#24201C] px-3 py-1 rounded-full border border-[#DECBB0] dark:border-[#3D352F]">
+                    <Leaf className="h-3.5 w-3.5 text-[#AEAC78]" />
+                    {product.category.name}
+                  </span>
+                )}
+              </div>
+
+              <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#4C4541] dark:text-[#FBF3E6]">
+                {product.name}
+              </h1>
+
+              <div className="flex items-center gap-2 font-mono text-xs sm:text-sm text-[#5A5B35] dark:text-[#AEAC78]">
+                <span>Dedicated Product Subdomain:</span>
+                <span className="font-bold underline decoration-[#AEAC78]/50">
+                  {product.subdomain}.sitenest.com
+                </span>
+              </div>
+
+              {product.description && (
+                <p className="text-sm text-[#7A6F68] dark:text-[#B5AAA0] leading-relaxed pt-1">
+                  {product.description}
+                </p>
               )}
             </div>
-
-            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#4C4541] dark:text-[#FBF3E6]">
-              {product.name}
-            </h1>
-
-            <div className="flex items-center gap-2 font-mono text-xs sm:text-sm text-[#5A5B35] dark:text-[#AEAC78]">
-              <span>Dedicated Product Subdomain:</span>
-              <span className="font-bold underline decoration-[#AEAC78]/50">
-                {product.subdomain}.sitenest.com
-              </span>
-            </div>
-
-            {product.description && (
-              <p className="text-sm text-[#7A6F68] dark:text-[#B5AAA0] leading-relaxed pt-1">
-                {product.description}
-              </p>
-            )}
           </div>
 
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0 lg:self-center">
             <a
               href={`/s/${product.subdomain}`}
               target="_blank"

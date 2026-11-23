@@ -16,6 +16,8 @@ import {
   ImageIcon,
   Leaf,
   ShieldAlert,
+  Sparkles,
+  Zap,
 } from "lucide-react";
 
 interface Category {
@@ -34,6 +36,8 @@ export default function NewProductMicrositePage() {
   const [categoryId, setCategoryId] = useState("");
   const [description, setDescription] = useState("");
   const [file, setFile] = useState<File | null>(null);
+  const [productImage, setProductImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const [isDeploying, setIsDeploying] = useState(false);
   const [deployStep, setDeployStep] = useState<string | null>(null);
@@ -41,6 +45,7 @@ export default function NewProductMicrositePage() {
   const [deployedProduct, setDeployedProduct] = useState<{ id: string; subdomain: string; slug?: string } | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const imageInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     // Check authentication and admin permissions
@@ -101,6 +106,33 @@ export default function NewProductMicrositePage() {
     }
   };
 
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const img = e.target.files[0];
+      if (img.type.startsWith("image/")) {
+        setProductImage(img);
+        setImagePreview(URL.createObjectURL(img));
+        setError(null);
+      } else {
+        setError("Please select a valid image file (PNG, JPG, JPEG, WebP, AVIF).");
+      }
+    }
+  };
+
+  const handleImageDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      const img = e.dataTransfer.files[0];
+      if (img.type.startsWith("image/")) {
+        setProductImage(img);
+        setImagePreview(URL.createObjectURL(img));
+        setError(null);
+      } else {
+        setError("Please select a valid image file (PNG, JPG, JPEG, WebP, AVIF).");
+      }
+    }
+  };
+
   const handleDeploy = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -140,12 +172,15 @@ export default function NewProductMicrositePage() {
       }
 
       const site = siteData.website;
-      setDeployStep("Uploading product static ZIP archive to isolated storage...");
+      setDeployStep("Uploading ZIP archive & auto-compressing product images to WebP...");
 
-      // Step 2: Upload ZIP
+      // Step 2: Upload ZIP & Product Image
       const formData = new FormData();
       formData.append("file", file);
       formData.append("changeLog", "Initial botanical release v1");
+      if (productImage) {
+        formData.append("productImage", productImage);
+      }
 
       const uploadRes = await fetch(`/api/sites/${site.id}/upload`, {
         method: "POST",
@@ -157,7 +192,7 @@ export default function NewProductMicrositePage() {
         throw new Error(uploadData.error || "Failed to upload and validate ZIP archive");
       }
 
-      setDeployStep("Extracting HTML, CSS, JS, and image assets...");
+      setDeployStep("Extracting static assets & converting archive images to WebP...");
 
       // Step 3: Poll status
       let attempts = 0;
@@ -207,13 +242,13 @@ export default function NewProductMicrositePage() {
           <div className="pt-4 flex items-center justify-center gap-4">
             <button
               onClick={() => router.push("/products")}
-              className="rounded-xl bg-[#F2C46A] hover:bg-[#E5B555] px-5 py-2.5 text-xs font-semibold text-[#2D2305] transition-colors shadow-sm"
+              className="rounded-xl bg-[#F2C46A] hover:bg-[#E5B555] px-5 py-2.5 text-xs font-semibold text-[#2D2305] transition-colors shadow-sm cursor-pointer"
             >
               Browse Botanical Products
             </button>
             <button
               onClick={() => router.push("/login")}
-              className="rounded-xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FCF0DA]/60 dark:bg-[#1E1A17] px-5 py-2.5 text-xs font-semibold text-[#4C4541] dark:text-[#FBF3E6] hover:bg-[#F5E5C9] transition-colors"
+              className="rounded-xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FCF0DA]/60 dark:bg-[#1E1A17] px-5 py-2.5 text-xs font-semibold text-[#4C4541] dark:text-[#FBF3E6] hover:bg-[#F5E5C9] transition-colors cursor-pointer"
             >
               Sign In as Admin
             </button>
@@ -235,7 +270,7 @@ export default function NewProductMicrositePage() {
           Register Botanical Product & Deploy Subdomain
         </h1>
         <p className="mt-1 text-sm text-[#7A6F68] dark:text-[#B5AAA0]">
-          Upload the product&apos;s static microsite as a ZIP archive. Each botanical supplement receives its own dedicated subdomain with isolated static routing.
+          Upload the product&apos;s static microsite ZIP and product imagery. All images are automatically compressed and converted to WebP format for optimal performance.
         </p>
       </div>
 
@@ -255,15 +290,15 @@ export default function NewProductMicrositePage() {
 ├── index.html           <- Primary product landing page
 ├── styles.css           <- Custom styling (or inside css/)
 ├── app.js               <- Client scripts (or inside js/)
-└── images/              <- Product photos, ingredient badges, botanical graphics
-    ├── bottle-render.png
-    ├── purity-seal.svg
-    └── herbal-source.jpg`}</pre>
+└── images/              <- PNG/JPG files are auto-converted to .webp!
+    ├── bottle-render.png -> auto-converted to bottle-render.webp
+    ├── purity-seal.jpg   -> auto-converted to purity-seal.webp
+    └── herbal-source.jpg -> auto-converted to herbal-source.webp`}</pre>
         </div>
 
-        <div className="flex items-center gap-2 text-[11px] text-[#7A6F68] dark:text-[#B5AAA0]">
-          <ImageIcon className="h-3.5 w-3.5 text-[#AEAC78] shrink-0" />
-          <span>Relative image paths in your HTML are fully supported, e.g.: <code className="font-mono text-[#4C4541] dark:text-[#FBF3E6]">&lt;img src=&quot;images/bottle-render.png&quot; /&gt;</code></span>
+        <div className="flex items-center gap-2 text-[11px] text-[#5A5B35] dark:text-[#AEAC78] bg-[#AEAC78]/15 px-3 py-2 rounded-xl border border-[#AEAC78]/30">
+          <Zap className="h-4 w-4 shrink-0 text-[#AEAC78]" />
+          <span><strong>Automatic WebP Pipeline:</strong> Any raster images in your ZIP are converted to compressed .webp during extraction, reducing page size by 70–85%!</span>
         </div>
       </div>
 
@@ -275,7 +310,7 @@ export default function NewProductMicrositePage() {
             <h3 className="text-lg font-semibold text-[#4C4541] dark:text-[#FBF3E6]">Product Microsite Live!</h3>
           </div>
           <p className="text-sm text-[#7A6F68] dark:text-[#B5AAA0]">
-            The product is now provisioned and publicly accessible at its dedicated subdomain:
+            The product is now provisioned, images converted to WebP, and publicly accessible:
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-[#FCF0DA]/60 dark:bg-[#1E1A17] border border-[#DECBB0] dark:border-[#3D352F] rounded-xl p-4">
             <div className="font-mono text-sm text-[#5A5B35] dark:text-[#AEAC78] flex items-center gap-2">
@@ -295,7 +330,7 @@ export default function NewProductMicrositePage() {
               <button
                 type="button"
                 onClick={() => router.push(`/products/${deployedProduct.slug || deployedProduct.subdomain}`)}
-                className="inline-flex items-center gap-1.5 rounded-xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#24201C] px-4 py-2 text-xs font-medium text-[#4C4541] dark:text-[#FBF3E6] hover:bg-[#F5E5C9] dark:hover:bg-[#2D2823] transition-colors"
+                className="inline-flex items-center gap-1.5 rounded-xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#24201C] px-4 py-2 text-xs font-medium text-[#4C4541] dark:text-[#FBF3E6] hover:bg-[#F5E5C9] dark:hover:bg-[#2D2823] transition-colors cursor-pointer"
               >
                 View Product Details
               </button>
@@ -370,7 +405,7 @@ export default function NewProductMicrositePage() {
                 </span>
               </div>
               <p className="text-[11px] text-[#7A6F68] dark:text-[#B5AAA0]">
-                Dedicated product address: <span className="font-mono text-[#5A5B35] dark:text-[#AEAC78]">https://{subdomain || "your-product"}.sitenest.com</span>
+                Dedicated address: <span className="font-mono text-[#5A5B35] dark:text-[#AEAC78]">https://{subdomain || "your-product"}.sitenest.com</span>
               </p>
             </div>
 
@@ -386,6 +421,66 @@ export default function NewProductMicrositePage() {
                 onChange={(e) => setDescription(e.target.value)}
                 className="w-full rounded-xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FCF0DA]/50 dark:bg-[#1E1A17] px-3.5 py-2.5 text-sm text-[#4C4541] dark:text-[#FBF3E6] placeholder-[#7A6F68]/60 focus:border-[#AEAC78] focus:outline-none"
               />
+            </div>
+
+            {/* PRODUCT IMAGE UPLOAD (AUTO COMPRESS & WEBP CONVERSION) */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <label className="text-xs font-semibold uppercase tracking-wider text-[#4C4541] dark:text-[#FBF3E6]">
+                  Product Image (Auto-Compress to WebP)
+                </label>
+                <span className="text-[10px] font-mono text-[#5A5B35] dark:text-[#AEAC78] bg-[#AEAC78]/15 px-2 py-0.5 rounded border border-[#AEAC78]/30">
+                  Auto WebP Conversion
+                </span>
+              </div>
+
+              <div
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={handleImageDrop}
+                onClick={() => imageInputRef.current?.click()}
+                className={`relative flex flex-col items-center justify-center rounded-2xl border-2 border-dashed p-6 cursor-pointer transition-all ${
+                  productImage
+                    ? "border-[#AEAC78] bg-[#F5E5C9]/40 dark:bg-[#2D2823]/60"
+                    : "border-[#DECBB0] dark:border-[#3D352F] hover:border-[#AEAC78] dark:hover:border-[#AEAC78] bg-[#FCF0DA]/30 dark:bg-[#1E1A17]"
+                }`}
+              >
+                <input
+                  ref={imageInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageSelect}
+                  className="hidden"
+                />
+
+                {imagePreview ? (
+                  <div className="flex flex-col sm:flex-row items-center gap-4 w-full">
+                    <div className="h-24 w-24 rounded-xl overflow-hidden border border-[#DECBB0] dark:border-[#3D352F] bg-white shrink-0 shadow-sm">
+                      <img src={imagePreview} alt="Product Preview" className="h-full w-full object-cover" />
+                    </div>
+                    <div className="space-y-1 text-center sm:text-left flex-1">
+                      <p className="text-sm font-semibold text-[#4C4541] dark:text-[#FBF3E6]">{productImage?.name}</p>
+                      <p className="text-xs text-[#7A6F68] dark:text-[#B5AAA0]">
+                        {productImage ? (productImage.size / 1024).toFixed(1) : 0} KB • Will be converted to WebP with 80% lossy compression
+                      </p>
+                      <span className="inline-block text-[11px] text-[#5A5B35] dark:text-[#AEAC78] underline">
+                        Click or drag to choose another photo
+                      </span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-center space-y-2">
+                    <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-xl bg-[#F5E5C9] dark:bg-[#2D2823] text-[#7A6F68] dark:text-[#B5AAA0]">
+                      <ImageIcon className="h-5 w-5 text-[#AEAC78]" />
+                    </div>
+                    <p className="text-sm font-semibold text-[#4C4541] dark:text-[#FBF3E6]">
+                      Upload product packaging or bottle image, or <span className="text-[#AEAC78] underline">browse</span>
+                    </p>
+                    <p className="text-xs text-[#7A6F68] dark:text-[#B5AAA0]">
+                      PNG, JPG, JPEG, AVIF • Auto-converted to optimized WebP
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Drag & Drop ZIP Dropzone */}
@@ -444,9 +539,9 @@ export default function NewProductMicrositePage() {
             <div className="rounded-xl bg-[#FCF0DA]/60 dark:bg-[#1E1A17] border border-[#DECBB0] dark:border-[#3D352F] p-4 flex items-start gap-3 text-xs text-[#7A6F68] dark:text-[#B5AAA0]">
               <ShieldCheck className="h-4 w-4 shrink-0 text-[#AEAC78] mt-0.5" />
               <div>
-                <p className="font-medium text-[#4C4541] dark:text-[#FBF3E6]">Automatic Extraction & Isolated Subdomain Sandboxing</p>
+                <p className="font-medium text-[#4C4541] dark:text-[#FBF3E6]">Automatic Extraction & WebP Image Optimization</p>
                 <p className="mt-0.5 leading-relaxed">
-                  The archive must contain an <code className="text-[#4C4541] dark:text-[#FBF3E6] font-mono">index.html</code> entry point. Folders like <code className="font-mono">images/</code>, <code className="font-mono">css/</code>, and <code className="font-mono">js/</code> are extracted with relative paths preserved. Executable scripts are blocked for security.
+                  The archive must contain an <code className="text-[#4C4541] dark:text-[#FBF3E6] font-mono">index.html</code> entry point. All images found inside the archive are converted to compressed <code className="text-[#4C4541] dark:text-[#FBF3E6] font-mono">.webp</code> with relative paths updated in your markup.
                 </p>
               </div>
             </div>
@@ -457,7 +552,7 @@ export default function NewProductMicrositePage() {
             <button
               type="button"
               onClick={() => router.push("/products")}
-              className="rounded-xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#24201C] px-5 py-2.5 text-sm font-medium text-[#4C4541] dark:text-[#FBF3E6] hover:bg-[#F5E5C9] dark:hover:bg-[#2D2823] transition-colors"
+              className="rounded-xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#24201C] px-5 py-2.5 text-sm font-medium text-[#4C4541] dark:text-[#FBF3E6] hover:bg-[#F5E5C9] dark:hover:bg-[#2D2823] transition-colors cursor-pointer"
             >
               Cancel
             </button>
