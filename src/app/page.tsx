@@ -1,31 +1,37 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { prisma } from "@/lib/prisma";
+import { getSession } from "@/lib/auth";
+import { isAdmin } from "@/lib/permissions";
 import {
   Globe,
   ArrowRight,
   ExternalLink,
   Search,
-  Compass,
   CheckCircle2,
-  Sparkles as _,
-  Eye,
   Layers,
-  FolderArchive,
   Zap,
   ShieldCheck,
-  Feather,
+  Leaf,
+  FlaskConical,
 } from "lucide-react";
 
 export const metadata = {
-  title: "SiteNest — Curated Showcase of Handcrafted Static Websites & Portfolios",
+  title: "SiteNest Botanicals — Targeted Botanical Nutrition & Bioactive Formulations",
   description:
-    "Explore a curated index of high-performance static websites, creative agency landing pages, designer portfolios, and bespoke digital experiences deployed live on custom subdomains.",
+    "Pure, lab-verified botanical supplements engineered for vitality, cognitive resilience, and cellular longevity. Each product is accompanied by a dedicated research microsite.",
 };
 
 export default async function HomePage() {
-  const [showcaseSites, categories] = await Promise.all([
+  // If an authenticated admin accesses the public home page, redirect them to the Admin Portal
+  const session = await getSession();
+  if (session && isAdmin(session.role)) {
+    redirect("/admin");
+  }
+
+  const [products, categories] = await Promise.all([
     prisma.website.findMany({
       where: { status: "LIVE" },
       take: 6,
@@ -52,33 +58,33 @@ export default async function HomePage() {
       <Navbar />
 
       <main className="flex-1">
-        {/* FULL EXPANSIVE HERO SECTION */}
+        {/* FULL EXPANSIVE BOTANICAL SUPPLEMENT HERO SECTION */}
         <section className="relative overflow-hidden bg-craft-grid py-20 sm:py-28 lg:py-36 border-b border-[#DECBB0] dark:border-[#3D352F]">
           <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-            {/* Curated Directory Badge */}
+            {/* Quality Badge */}
             <div className="inline-flex items-center gap-2 rounded-full border border-[#AEAC78]/50 bg-[#FFF8ED]/90 dark:bg-[#24201C]/90 px-4 py-1.5 text-xs font-semibold text-[#5A5B35] dark:text-[#AEAC78] shadow-sm mb-6 backdrop-blur-sm">
-              <Compass className="h-3.5 w-3.5 text-[#AEAC78]" />
-              <span>Curated Web Directory • Handcrafted Showcase</span>
+              <Leaf className="h-3.5 w-3.5 text-[#AEAC78]" />
+              <span>Artisan Botanical Nutrition • Clinically Lab-Verified</span>
             </div>
 
-            {/* Main SEO Heading */}
+            {/* Main Hero Headline */}
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-[#4C4541] dark:text-[#FBF3E6] max-w-4xl mx-auto leading-[1.1]">
-              Discover Exceptional Handcrafted Websites & Portfolios
+              Targeted Botanical Nutrition & Bioactive Formulations
             </h1>
 
-            {/* SEO Subtitle / Value Proposition */}
+            {/* Subtitle / Brand Value Proposition */}
             <p className="mt-6 text-base sm:text-xl text-[#7A6F68] dark:text-[#B5AAA0] max-w-2xl mx-auto leading-relaxed">
-              A curated index of high-performance static websites, creative studio showcases, and bespoke digital experiences. Explore real productions deployed live with sub-second performance.
+              Pure, lab-verified botanical supplements engineered for vitality, cognitive resilience, and cellular longevity. Each product is accompanied by a dedicated research microsite.
             </p>
 
-            {/* Direct Search Form */}
+            {/* Product Search Form */}
             <div className="mt-8 max-w-2xl mx-auto w-full">
-              <form action="/sites" method="GET" className="relative flex items-center">
+              <form action="/products" method="GET" className="relative flex items-center">
                 <Search className="absolute left-4 h-5 w-5 text-[#AEAC78]" />
                 <input
                   type="text"
                   name="search"
-                  placeholder="Search curated portfolios, agencies, product showcases..."
+                  placeholder="Search supplements by health goal, herb, or active ingredient..."
                   className="w-full rounded-2xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#24201C] pl-12 pr-32 py-3.5 text-sm text-[#4C4541] dark:text-[#FBF3E6] placeholder-[#7A6F68]/70 focus:border-[#AEAC78] focus:outline-none focus:ring-2 focus:ring-[#AEAC78]/20 shadow-sm"
                 />
                 <button
@@ -90,141 +96,143 @@ export default async function HomePage() {
               </form>
             </div>
 
-            {/* Category Filter Pills in Hero */}
+            {/* Health Goal Filter Pills */}
             <div className="mt-6 flex flex-wrap items-center justify-center gap-2 text-xs">
-              <span className="text-[#7A6F68] dark:text-[#B5AAA0] font-medium mr-1">Popular:</span>
+              <span className="text-[#7A6F68] dark:text-[#B5AAA0] font-medium mr-1">Health Goals:</span>
               {categories.map((c) => (
                 <Link
                   key={c.id}
-                  href={`/sites?category=${c.slug}`}
-                  className="px-3 py-1 rounded-full border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#24201C] text-[#4C4541] dark:text-[#FBF3E6] hover:border-[#AEAC78] hover:bg-[#F5E5C9] dark:hover:bg-[#2D2823] transition-all font-medium"
+                  href={`/products?category=${c.slug}`}
+                  className="px-3.5 py-1 rounded-full border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#24201C] text-[#4C4541] dark:text-[#FBF3E6] hover:border-[#AEAC78] hover:bg-[#F5E5C9] dark:hover:bg-[#2D2823] transition-all font-medium shadow-sm"
                 >
                   {c.name}
                 </Link>
               ))}
             </div>
 
-            {/* Live Metrics & Highlights */}
+            {/* Quality Certifications & Highlights */}
             <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-xs text-[#7A6F68] dark:text-[#B5AAA0]">
               <span className="flex items-center gap-1.5 font-medium">
                 <CheckCircle2 className="h-4 w-4 text-[#AEAC78]" />
-                100% Pure Static HTML/CSS/JS
+                100% Third-Party Lab Tested
               </span>
               <span className="flex items-center gap-1.5 font-medium">
                 <CheckCircle2 className="h-4 w-4 text-[#AEAC78]" />
-                Instant Dedicated Subdomains
+                Wild-Harvested & Organic Botanicals
               </span>
               <span className="flex items-center gap-1.5 font-medium">
                 <CheckCircle2 className="h-4 w-4 text-[#AEAC78]" />
-                Sub-Second Edge Loading Speed
+                Zero Fillers, Binders, or Artificial Colors
               </span>
               <span className="flex items-center gap-1.5 font-medium">
                 <CheckCircle2 className="h-4 w-4 text-[#AEAC78]" />
-                Zero Tracking Scripts or Bloat
+                Dedicated Product Research Subdomains
               </span>
             </div>
           </div>
         </section>
 
-        {/* CURATED FEATURED SHOWCASE */}
-        <section id="showcase" className="py-20 sm:py-28">
+        {/* FEATURED SUPPLEMENT PRODUCTS */}
+        <section id="products" className="py-20 sm:py-28">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
               <div className="space-y-2">
                 <span className="text-xs font-bold uppercase tracking-widest text-[#5A5B35] dark:text-[#AEAC78]">
-                  CURATED SELECTION
+                  TARGETED FORMULATIONS
                 </span>
                 <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#4C4541] dark:text-[#FBF3E6]">
-                  Featured Live Websites
+                  Featured Botanical Products
                 </h2>
                 <p className="text-sm text-[#7A6F68] dark:text-[#B5AAA0]">
-                  Real productions, agency showcases, and designer portfolios currently live in our directory.
+                  Each supplement product is backed by full clinical transparency and its own dedicated live research microsite.
                 </p>
               </div>
               <Link
-                href="/sites"
+                href="/products"
                 className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#5A5B35] dark:text-[#AEAC78] hover:underline"
               >
-                Browse All Directory Entries
+                View Full Product Catalog
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
 
-            {showcaseSites.length === 0 ? (
+            {products.length === 0 ? (
               <div className="rounded-2xl border border-dashed border-[#DECBB0] dark:border-[#3D352F] p-16 text-center text-xs text-[#7A6F68] dark:text-[#B5AAA0] bg-[#FFF8ED] dark:bg-[#24201C]">
-                Websites will appear here once published by the administrator.
+                Products will appear here once published by the administrator.
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {showcaseSites.map((site) => (
-                  <div
-                    key={site.id}
-                    className="group rounded-2xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#24201C] p-6 flex flex-col justify-between hover:border-[#AEAC78] dark:hover:border-[#AEAC78] transition-all shadow-sm"
-                  >
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between">
-                        <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#2D2305] dark:text-[#F2C46A] bg-[#F2C46A]/30 dark:bg-[#F2C46A]/10 px-2.5 py-0.5 rounded-full border border-[#F2C46A]/50">
-                          <span className="h-1.5 w-1.5 rounded-full bg-[#AEAC78]" />
-                          Live
-                        </span>
-                        {site.category && (
-                          <span className="text-[11px] text-[#7A6F68] dark:text-[#B5AAA0] font-medium">
-                            {site.category.name}
+                {products.map((product) => {
+                  return (
+                    <div
+                      key={product.id}
+                      className="group rounded-2xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#24201C] p-6 flex flex-col justify-between hover:border-[#AEAC78] dark:hover:border-[#AEAC78] transition-all shadow-sm"
+                    >
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#2D2305] dark:text-[#F2C46A] bg-[#F2C46A]/30 dark:bg-[#F2C46A]/10 px-2.5 py-0.5 rounded-full border border-[#F2C46A]/50">
+                            <span className="h-1.5 w-1.5 rounded-full bg-[#AEAC78]" />
+                            Live Product
                           </span>
+                          {product.category && (
+                            <span className="text-[11px] text-[#7A6F68] dark:text-[#B5AAA0] font-medium">
+                              {product.category.name}
+                            </span>
+                          )}
+                        </div>
+
+                        <h3 className="text-xl font-bold text-[#4C4541] dark:text-[#FBF3E6] group-hover:text-[#5A5B35] dark:group-hover:text-[#AEAC78] transition-colors">
+                          {product.name}
+                        </h3>
+
+                        <p className="font-mono text-xs text-[#5A5B35] dark:text-[#AEAC78] truncate">
+                          {product.subdomain}.sitenest.com
+                        </p>
+
+                        {product.description && (
+                          <p className="text-xs text-[#7A6F68] dark:text-[#B5AAA0] line-clamp-2 leading-relaxed">
+                            {product.description}
+                          </p>
                         )}
                       </div>
 
-                      <h3 className="text-xl font-bold text-[#4C4541] dark:text-[#FBF3E6] group-hover:text-[#5A5B35] dark:group-hover:text-[#AEAC78] transition-colors">
-                        {site.name}
-                      </h3>
-
-                      <p className="font-mono text-xs text-[#5A5B35] dark:text-[#AEAC78] truncate">
-                        {site.subdomain}.sitenest.com
-                      </p>
-
-                      {site.description && (
-                        <p className="text-xs text-[#7A6F68] dark:text-[#B5AAA0] line-clamp-2 leading-relaxed">
-                          {site.description}
-                        </p>
-                      )}
+                      <div className="mt-6 pt-4 border-t border-[#DECBB0] dark:border-[#3D352F] flex items-center justify-between text-xs">
+                        <Link
+                          href={`/products/${product.slug}`}
+                          className="text-[#7A6F68] dark:text-[#B5AAA0] hover:text-[#4C4541] dark:hover:text-[#FBF3E6] font-medium"
+                        >
+                          View Details & Lab Specs
+                        </Link>
+                        <a
+                          href={`/s/${product.subdomain}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-1 text-[#5A5B35] dark:text-[#AEAC78] font-semibold hover:underline"
+                        >
+                          Open Microsite
+                          <ExternalLink className="h-3.5 w-3.5" />
+                        </a>
+                      </div>
                     </div>
-
-                    <div className="mt-6 pt-4 border-t border-[#DECBB0] dark:border-[#3D352F] flex items-center justify-between text-xs">
-                      <Link
-                        href={`/sites/${site.slug}`}
-                        className="text-[#7A6F68] dark:text-[#B5AAA0] hover:text-[#4C4541] dark:hover:text-[#FBF3E6] font-medium"
-                      >
-                        Inspect Details
-                      </Link>
-                      <a
-                        href={`/s/${site.subdomain}`}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-1 text-[#5A5B35] dark:text-[#AEAC78] font-semibold hover:underline"
-                      >
-                        Visit Live Site
-                        <ExternalLink className="h-3.5 w-3.5" />
-                      </a>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>
         </section>
 
-        {/* EXPLORE COLLECTIONS SECTION */}
-        <section id="categories" className="py-20 sm:py-28 border-t border-[#DECBB0] dark:border-[#3D352F] bg-[#F5E5C9]/40 dark:bg-[#1E1A17]/60">
+        {/* EXPLORE BY HEALTH GOAL */}
+        <section className="py-20 sm:py-28 border-t border-[#DECBB0] dark:border-[#3D352F] bg-[#F5E5C9]/40 dark:bg-[#1E1A17]/60">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-2xl mx-auto space-y-3 mb-14">
               <span className="text-xs font-bold uppercase tracking-widest text-[#5A5B35] dark:text-[#AEAC78]">
-                EXPLORE BY NICHE
+                CLINICAL FOCUS
               </span>
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#4C4541] dark:text-[#FBF3E6]">
-                Curated Collections
+                Explore by Health Goal
               </h2>
               <p className="text-sm text-[#7A6F68] dark:text-[#B5AAA0]">
-                Browse through targeted digital categories engineered for aesthetics, performance, and craftsmanship.
+                Every formulation is categorized by its primary biological mechanism and clinical focus area.
               </p>
             </div>
 
@@ -232,24 +240,24 @@ export default async function HomePage() {
               {categories.map((cat) => (
                 <Link
                   key={cat.id}
-                  href={`/sites?category=${cat.slug}`}
+                  href={`/products?category=${cat.slug}`}
                   className="rounded-2xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#24201C] p-6 hover:border-[#AEAC78] dark:hover:border-[#AEAC78] transition-all group shadow-sm flex flex-col justify-between"
                 >
                   <div className="space-y-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F5E5C9] dark:bg-[#1E1A17] text-[#AEAC78] border border-[#DECBB0] dark:border-[#3D352F] group-hover:scale-105 transition-transform">
-                      <FolderArchive className="h-5 w-5" />
+                      <Leaf className="h-5 w-5" />
                     </div>
                     <h3 className="text-lg font-bold text-[#4C4541] dark:text-[#FBF3E6] group-hover:text-[#5A5B35] dark:group-hover:text-[#AEAC78] transition-colors">
                       {cat.name}
                     </h3>
                     <p className="text-xs text-[#7A6F68] dark:text-[#B5AAA0] leading-relaxed">
-                      {cat.description || "Browse websites and showcases published in this category."}
+                      {cat.description || "Explore botanical formulas and supplements in this category."}
                     </p>
                   </div>
                   <div className="mt-6 pt-4 border-t border-[#DECBB0] dark:border-[#3D352F] flex items-center justify-between text-xs text-[#7A6F68] dark:text-[#B5AAA0]">
-                    <span>{cat._count.websites} Live Websites</span>
+                    <span>{cat._count.websites} Formulations</span>
                     <span className="font-semibold text-[#5A5B35] dark:text-[#AEAC78] group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
-                      Browse &rarr;
+                      Shop Goal &rarr;
                     </span>
                   </div>
                 </Link>
@@ -258,61 +266,51 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* SEO EDITORIAL ARTICLE / CRAFTSMANSHIP ESSAY */}
+        {/* BOTANICAL QUALITY STANDARDS & PHILOSOPHY */}
         <section className="py-20 sm:py-28 border-t border-[#DECBB0] dark:border-[#3D352F]">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 space-y-12">
             <div className="text-center space-y-3">
               <span className="text-xs font-bold uppercase tracking-widest text-[#5A5B35] dark:text-[#AEAC78]">
-                DESIGN & PHILOSOPHY
+                LAB TESTING & TRANSPARENCY
               </span>
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#4C4541] dark:text-[#FBF3E6]">
-                The Enduring Power of the Static Web
+                The SiteNest Botanical Standard
               </h2>
               <p className="text-sm text-[#7A6F68] dark:text-[#B5AAA0]">
-                Why handcrafted HTML, CSS, and purposeful typography represent the zenith of digital longevity.
+                Every batch verified for potency, purity, and cellular bioavailability.
               </p>
             </div>
 
-            <div className="prose prose-neutral dark:prose-invert max-w-none text-sm text-[#7A6F68] dark:text-[#B5AAA0] space-y-6 leading-relaxed">
-              <p>
-                In an era dominated by bloated JavaScript bundles and fragile client-side hydration cascades, handcrafted static websites stand out as beacons of clarity and reliability. When a web document consists of pure, semantic HTML, carefully sculpted CSS, and minimal purposeful scripting, it loads instantaneously, consumes negligible memory, and functions flawlessly across every device and browser generation.
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 not-prose my-8">
-                <div className="rounded-2xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#24201C] p-6 space-y-2 shadow-sm">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#AEAC78]/20 text-[#5A5B35] dark:text-[#AEAC78] mb-3">
-                    <Zap className="h-4 w-4" />
-                  </div>
-                  <h4 className="font-bold text-[#4C4541] dark:text-[#FBF3E6] text-sm">Unmatched Velocity</h4>
-                  <p className="text-xs text-[#7A6F68] dark:text-[#B5AAA0] leading-relaxed">
-                    Zero database lookups and zero application runtime latency. Files are streamed directly from high-speed storage in single-digit milliseconds.
-                  </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="rounded-2xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#24201C] p-6 space-y-2 shadow-sm">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#AEAC78]/20 text-[#5A5B35] dark:text-[#AEAC78] mb-3">
+                  <ShieldCheck className="h-4 w-4" />
                 </div>
-
-                <div className="rounded-2xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#24201C] p-6 space-y-2 shadow-sm">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#AEAC78]/20 text-[#5A5B35] dark:text-[#AEAC78] mb-3">
-                    <ShieldCheck className="h-4 w-4" />
-                  </div>
-                  <h4 className="font-bold text-[#4C4541] dark:text-[#FBF3E6] text-sm">Fortified Security</h4>
-                  <p className="text-xs text-[#7A6F68] dark:text-[#B5AAA0] leading-relaxed">
-                    Without server-side execution environments, common vulnerabilities such as SQL injection, server code execution, and credential exfiltration are rendered obsolete.
-                  </p>
-                </div>
-
-                <div className="rounded-2xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#24201C] p-6 space-y-2 shadow-sm">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#AEAC78]/20 text-[#5A5B35] dark:text-[#AEAC78] mb-3">
-                    <Feather className="h-4 w-4" />
-                  </div>
-                  <h4 className="font-bold text-[#4C4541] dark:text-[#FBF3E6] text-sm">Artisan Typography</h4>
-                  <p className="text-xs text-[#7A6F68] dark:text-[#B5AAA0] leading-relaxed">
-                    Designed around intentional layout hierarchies, warm organic palettes, and typography that respects reader attention without manipulative popups.
-                  </p>
-                </div>
+                <h4 className="font-bold text-[#4C4541] dark:text-[#FBF3E6] text-sm">Triple-Batch Testing</h4>
+                <p className="text-xs text-[#7A6F68] dark:text-[#B5AAA0] leading-relaxed">
+                  Every formulation undergoes independent third-party analysis for heavy metals, microbial safety, and active phytochemical standardization.
+                </p>
               </div>
 
-              <p>
-                Each website hosted on this platform is provisioned with its own isolated subdomain, guaranteeing strict boundary separation and pristine routing. Whether you are inspecting an editorial publication, reviewing a designer&apos;s portfolio, or discovering a product launch, you are viewing the web at its most elegant and resilient.
-              </p>
+              <div className="rounded-2xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#24201C] p-6 space-y-2 shadow-sm">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#AEAC78]/20 text-[#5A5B35] dark:text-[#AEAC78] mb-3">
+                  <Zap className="h-4 w-4" />
+                </div>
+                <h4 className="font-bold text-[#4C4541] dark:text-[#FBF3E6] text-sm">Liposomal Bioavailability</h4>
+                <p className="text-xs text-[#7A6F68] dark:text-[#B5AAA0] leading-relaxed">
+                  Utilizing chelated minerals and liposomal phospholipid matrices to bypass stomach degradation and maximize direct cellular absorption.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#24201C] p-6 space-y-2 shadow-sm">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#AEAC78]/20 text-[#5A5B35] dark:text-[#AEAC78] mb-3">
+                  <Globe className="h-4 w-4" />
+                </div>
+                <h4 className="font-bold text-[#4C4541] dark:text-[#FBF3E6] text-sm">Dedicated Subdomains</h4>
+                <p className="text-xs text-[#7A6F68] dark:text-[#B5AAA0] leading-relaxed">
+                  Every product is accompanied by its own independent static research site (e.g. collagen.sitenest.com) containing full clinical monographs and batch records.
+                </p>
+              </div>
             </div>
           </div>
         </section>

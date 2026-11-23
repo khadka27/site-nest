@@ -12,55 +12,55 @@ export default function Footer() {
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#F2C46A] text-[#2D2305]">
                 <Layers className="h-4 w-4" />
               </div>
-              <span>Site<span className="text-[#AEAC78]">Nest</span></span>
+              <span>Site<span className="text-[#AEAC78]">Nest</span> <span className="text-xs font-normal text-[#5A5B35] dark:text-[#AEAC78]">Botanicals</span></span>
             </Link>
             <p className="text-sm text-[#7A6F68] dark:text-[#B5AAA0] leading-relaxed">
-              A curated index of high-performance static websites, creative agency landing pages, designer portfolios, and bespoke digital experiences deployed live on custom subdomains.
+              Targeted botanical nutrition and bioactive formulations. Pure, lab-verified supplements engineered for vitality, cognitive resilience, and cellular longevity — each accompanied by a dedicated research microsite.
             </p>
           </div>
 
-          {/* Directory links */}
+          {/* Product links */}
           <div>
-            <h4 className="text-sm font-semibold text-[#4C4541] dark:text-[#FBF3E6] tracking-wider uppercase mb-4">Directory</h4>
+            <h4 className="text-sm font-semibold text-[#4C4541] dark:text-[#FBF3E6] tracking-wider uppercase mb-4">Navigation</h4>
             <ul className="space-y-2.5 text-sm">
-              <li><Link href="/sites" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6] transition-colors">Website Directory</Link></li>
-              <li><Link href="/#showcase" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6] transition-colors">Featured Showcases</Link></li>
-              <li><Link href="/#categories" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6] transition-colors">Curated Collections</Link></li>
-              <li><Link href="/login" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6] transition-colors">Admin Portal</Link></li>
+              <li><Link href="/" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6] transition-colors">Home</Link></li>
+              <li><Link href="/products" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6] transition-colors">All Products</Link></li>
+              <li><Link href="/about" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6] transition-colors">About Us</Link></li>
+              <li><Link href="/contact" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6] transition-colors">Contact & Inquiries</Link></li>
             </ul>
           </div>
 
-          {/* Editorial links */}
+          {/* Formulations */}
           <div>
-            <h4 className="text-sm font-semibold text-[#4C4541] dark:text-[#FBF3E6] tracking-wider uppercase mb-4">Editorial</h4>
+            <h4 className="text-sm font-semibold text-[#4C4541] dark:text-[#FBF3E6] tracking-wider uppercase mb-4">Health Goals</h4>
             <ul className="space-y-2.5 text-sm">
-              <li><Link href="/about" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6] transition-colors">Design Philosophy</Link></li>
-              <li><Link href="/faq" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6] transition-colors">Frequently Asked Questions</Link></li>
-              <li><Link href="/contact" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6] transition-colors">Contact Editorial</Link></li>
-              <li><Link href="/terms" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6] transition-colors">Terms of Service</Link></li>
-              <li><Link href="/privacy" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6] transition-colors">Privacy Policy</Link></li>
+              <li><Link href="/products?category=longevity" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6] transition-colors">Longevity & Anti-Aging</Link></li>
+              <li><Link href="/products?category=cognitive" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6] transition-colors">Cognitive & Focus</Link></li>
+              <li><Link href="/products?category=vitality" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6] transition-colors">Energy & Vitality</Link></li>
+              <li><Link href="/products?category=recovery" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6] transition-colors">Recovery & Sleep</Link></li>
+              <li><Link href="/products?category=botanicals" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6] transition-colors">Pure Botanicals</Link></li>
             </ul>
           </div>
 
-          {/* Curation Standards */}
+          {/* Quality Standards */}
           <div>
-            <h4 className="text-sm font-semibold text-[#4C4541] dark:text-[#FBF3E6] tracking-wider uppercase mb-4">Curation Standards</h4>
+            <h4 className="text-sm font-semibold text-[#4C4541] dark:text-[#FBF3E6] tracking-wider uppercase mb-4">Quality Standards</h4>
             <p className="text-sm text-[#7A6F68] dark:text-[#B5AAA0] leading-relaxed mb-4">
-              Pure semantic HTML, zero tracking bloat, intentional typography, and sub-second edge delivery across all modern devices.
+              100% Non-GMO, third-party lab tested for heavy metals and purity, wild-harvested botanicals, and zero synthetic fillers.
             </p>
             <div className="flex items-center gap-3">
               <span className="flex h-2 w-2 rounded-full bg-[#AEAC78] animate-pulse"></span>
-              <span className="text-xs font-mono text-[#7A6F68] dark:text-[#B5AAA0]">Directory Live & Operational</span>
+              <span className="text-xs font-mono text-[#7A6F68] dark:text-[#B5AAA0]">Lab Verification Certified</span>
             </div>
           </div>
         </div>
 
         <div className="pt-8 border-t border-[#DECBB0] dark:border-[#3D352F] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#7A6F68] dark:text-[#B5AAA0]">
-          <p>© 2026 SiteNest Directory Inc. All rights reserved.</p>
+          <p>© 2026 SiteNest Botanical Nutrition Inc. All rights reserved.</p>
           <div className="flex items-center gap-6">
-            <Link href="/terms" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6]">Terms</Link>
-            <Link href="/privacy" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6]">Privacy</Link>
-            <Link href="/contact" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6]">Contact</Link>
+            <Link href="/terms" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6]">Terms of Service</Link>
+            <Link href="/privacy" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6]">Privacy Policy</Link>
+            <Link href="/login" className="hover:text-[#4C4541] dark:hover:text-[#FBF3E6]">Admin Portal</Link>
           </div>
         </div>
       </div>

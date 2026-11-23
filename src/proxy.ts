@@ -1,4 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
+import { jwtVerify } from "jose";
+
+const JWT_SECRET = new TextEncoder().encode(
+  process.env.AUTH_SECRET || "sitenest-default-ultra-secure-key-32-chars-minimum!!"
+);
 
 export const config = {
   matcher: [
@@ -13,7 +18,7 @@ export const config = {
   ],
 };
 
-export function proxy(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   const url = req.nextUrl;
   const hostname = req.headers.get("host") || "";
 
@@ -43,12 +48,44 @@ export function proxy(req: NextRequest) {
     return NextResponse.rewrite(new URL(`/s/${subdomain}${path}`, req.url));
   }
 
-  // Path-based auth guards for dashboard and admin
   const token = req.cookies.get("sitenest_token")?.value;
   const isDashboard = url.pathname.startsWith("/dashboard");
-  const isAdmin = url.pathname.startsWith("/admin");
+  const isAdminPath = url.pathname.startsWith("/admin");
 
-  if ((isDashboard || isAdmin) && !token) {
+  // Decode JWT to check if user has admin privileges
+  let userIsAdmin = false;
+  if (token) {
+    try {
+      const { payload } = await jwtVerify(token, JWT_SECRET);
+      if (payload && (payload.role === "ADMIN" || payload.role === "SUPER_ADMIN")) {
+        userIsAdmin = true;
+      }
+    } catch {
+      // Invalid or expired token
+    }
+  }
+
+  // Admin cannot access public pages like Home (/), Products, About, Contact
+  // Redirect logged-in admins straight to the Admin Control Center (/admin)
+  const isPublicPage =
+    url.pathname === "/" ||
+    url.pathname === "/products" ||
+    url.pathname.startsWith("/products/") ||
+    url.pathname === "/about" ||
+    url.pathname === "/contact" ||
+    url.pathname === "/pricing" ||
+    url.pathname === "/faq" ||
+    url.pathname === "/sites" ||
+    url.pathname.startsWith("/sites/") ||
+    url.pathname === "/login" ||
+    url.pathname === "/register";
+
+  if (userIsAdmin && isPublicPage) {
+    return NextResponse.redirect(new URL("/admin", req.url));
+  }
+
+  // Path-based auth guards for dashboard and admin
+  if ((isDashboard || isAdminPath) && !token) {
     const loginUrl = new URL("/login", req.url);
     loginUrl.searchParams.set("callbackUrl", url.pathname);
     return NextResponse.redirect(loginUrl);

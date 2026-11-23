@@ -9,8 +9,7 @@ import path from "path";
 import fs from "fs/promises";
 import { logActivity } from "@/lib/activity";
 
-
-// POST /api/sites/[id]/upload: Uploads ZIP and initiates deployment
+// POST /api/sites/[id]/upload: Uploads ZIP and initiates deployment (ADMIN ONLY)
 export async function POST(
   req: NextRequest,
   context: { params: Promise<{ id: string }> }
@@ -20,6 +19,14 @@ export async function POST(
     const session = await getSession();
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    // Only administrators can upload ZIP archives and deploy products
+    if (!isAdmin(session.role)) {
+      return NextResponse.json(
+        { error: "Forbidden: Viewer accounts cannot upload product ZIP archives. Only administrators have deployment privileges." },
+        { status: 403 }
+      );
     }
 
     const website = await prisma.website.findUnique({
@@ -33,11 +40,7 @@ export async function POST(
     });
 
     if (!website) {
-      return NextResponse.json({ error: "Website not found" }, { status: 404 });
-    }
-
-    if (website.ownerId !== session.userId && !isAdmin(session.role)) {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+      return NextResponse.json({ error: "Product website record not found" }, { status: 404 });
     }
 
     await ensureStorageDirectories();

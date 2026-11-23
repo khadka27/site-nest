@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
+import { isAdmin } from "@/lib/permissions";
 import { slugify, isValidSubdomain } from "@/lib/utils";
 import { logActivity } from "@/lib/activity";
 import { WebsiteStatus } from "@prisma/client";
 import { z } from "zod";
 
 const createSiteSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
+  name: z.string().min(2, "Product name must be at least 2 characters"),
   subdomain: z.string().min(3).max(32),
   categoryId: z.string().optional(),
   description: z.string().max(500).optional(),
@@ -72,12 +73,20 @@ export async function GET(req: NextRequest) {
   }
 }
 
-// POST /api/sites: Create a new website
+// POST /api/sites: Create a new product (ADMIN ONLY)
 export async function POST(req: NextRequest) {
   try {
     const session = await getSession();
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    // Only Admin / Super Admin can create products and deploy sites
+    if (!isAdmin(session.role)) {
+      return NextResponse.json(
+        { error: "Forbidden: Viewer accounts cannot create products. Only administrators can upload and deploy products." },
+        { status: 403 }
+      );
     }
 
     const body = await req.json();

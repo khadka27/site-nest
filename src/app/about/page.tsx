@@ -1,11 +1,11 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { Compass, Feather, ShieldCheck, Zap } from "lucide-react";
+import { Leaf, ShieldCheck, Zap, Globe, Compass, Award } from "lucide-react";
 
 export const metadata = {
-  title: "Design Philosophy & Curation Standards — SiteNest",
+  title: "Botanical Philosophy & Purity Standards — SiteNest Botanicals",
   description:
-    "Learn about our editorial philosophy celebrating handcrafted web craftsmanship, minimal digital footprint, and curated static web experiences.",
+    "Learn about our botanical extraction philosophy, clean sourcing commitments, and our standard of deploying an independent, uncompromised research microsite for every product.",
 };
 
 export default function AboutPage() {
@@ -14,27 +14,29 @@ export default function AboutPage() {
       <Navbar />
 
       <main className="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-12">
+        {/* Intro */}
         <div className="space-y-4">
-          <span className="text-xs font-bold uppercase tracking-widest text-[#5A5B35] dark:text-[#AEAC78]">
-            EDITORIAL VISION & PHILOSOPHY
-          </span>
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#AEAC78]/50 bg-[#FFF8ED] dark:bg-[#24201C] px-3.5 py-1 text-xs font-semibold text-[#5A5B35] dark:text-[#AEAC78] shadow-sm">
+            <Leaf className="h-3.5 w-3.5 text-[#AEAC78]" />
+            <span>BIOACTIVE PURITY & SCIENTIFIC EXTRACTION</span>
+          </div>
           <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[#4C4541] dark:text-[#FBF3E6]">
-            Celebrating Handcrafted Digital Web Design
+            The SiteNest Botanical Standard
           </h1>
-          <p className="text-lg text-[#7A6F68] dark:text-[#B5AAA0] leading-relaxed">
-            SiteNest is an independent directory and curated gallery devoted to celebrating the art of the static web. We showcase real productions, creative studios, and bespoke portfolios that prioritize intentional typography, instant performance, and enduring digital craft.
+          <p className="text-base sm:text-lg text-[#7A6F68] dark:text-[#B5AAA0] leading-relaxed">
+            SiteNest Botanicals was founded on a singular premise: premium botanical formulations require absolute clinical transparency. Rather than hiding ingredient dossiers behind generic marketing claims, every single product we formulate is provisioned with its own dedicated, uncompromised research microsite on an isolated subdomain.
           </p>
         </div>
 
-        {/* 3 Core Editorial Pillars */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* 4 Core Pillars */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="rounded-2xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#24201C] p-6 space-y-3 shadow-sm">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F5E5C9] dark:bg-[#1E1A17] text-[#AEAC78] border border-[#DECBB0] dark:border-[#3D352F]">
-              <Feather className="h-5 w-5" />
+              <Leaf className="h-5 w-5" />
             </div>
-            <h3 className="font-bold text-[#4C4541] dark:text-[#FBF3E6] text-base">Typographic Craft</h3>
+            <h3 className="font-bold text-[#4C4541] dark:text-[#FBF3E6] text-base">Wild-Harvested & Organic Sourcing</h3>
             <p className="text-xs text-[#7A6F68] dark:text-[#B5AAA0] leading-relaxed">
-              We spotlight websites that treat typography and layout as fundamental art forms, respecting reader attention with clarity and poise.
+              We partner exclusively with sustainable organic growers and ethical wild-harvesters. Our raw plants are gathered at peak seasonal potency from native terroirs across the globe.
             </p>
           </div>
 
@@ -42,9 +44,9 @@ export default function AboutPage() {
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F5E5C9] dark:bg-[#1E1A17] text-[#AEAC78] border border-[#DECBB0] dark:border-[#3D352F]">
               <Zap className="h-5 w-5" />
             </div>
-            <h3 className="font-bold text-[#4C4541] dark:text-[#FBF3E6] text-base">Pure Performance</h3>
+            <h3 className="font-bold text-[#4C4541] dark:text-[#FBF3E6] text-base">Supercritical CO2 Extraction</h3>
             <p className="text-xs text-[#7A6F68] dark:text-[#B5AAA0] leading-relaxed">
-              Every curated website delivers instantaneous sub-second render times, eliminating heavy runtime trackers and bloated dependency chains.
+              We reject petroleum-based solvent extraction. By utilizing temperature-controlled supercritical CO2 and pure water extraction, we protect fragile bioactive terpenes and phytonutrients.
             </p>
           </div>
 
@@ -52,21 +54,31 @@ export default function AboutPage() {
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F5E5C9] dark:bg-[#1E1A17] text-[#AEAC78] border border-[#DECBB0] dark:border-[#3D352F]">
               <ShieldCheck className="h-5 w-5" />
             </div>
-            <h3 className="font-bold text-[#4C4541] dark:text-[#FBF3E6] text-base">Subdomain Integrity</h3>
+            <h3 className="font-bold text-[#4C4541] dark:text-[#FBF3E6] text-base">Independent Triple-Batch Testing</h3>
             <p className="text-xs text-[#7A6F68] dark:text-[#B5AAA0] leading-relaxed">
-              Each live website is partitioned with dedicated routing and subdomain identity, guaranteeing independent presentation.
+              Every production lot undergoes rigorous independent third-party laboratory analysis for heavy metals (lead, mercury, cadmium), pesticide residues, microbial flora, and active marker assays.
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#24201C] p-6 space-y-3 shadow-sm">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F5E5C9] dark:bg-[#1E1A17] text-[#AEAC78] border border-[#DECBB0] dark:border-[#3D352F]">
+              <Globe className="h-5 w-5" />
+            </div>
+            <h3 className="font-bold text-[#4C4541] dark:text-[#FBF3E6] text-base">Dedicated Product Subdomains</h3>
+            <p className="text-xs text-[#7A6F68] dark:text-[#B5AAA0] leading-relaxed">
+              Each formulation (such as collagen.sitenest.com or magnesium.sitenest.com) is provisioned with an isolated static website detailing clinical trials, COA batch records, and exact dosing protocols.
             </p>
           </div>
         </div>
 
-        {/* Curation Standards */}
+        {/* Curation & Quality Standards */}
         <div className="rounded-2xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#24201C] p-8 space-y-4 shadow-sm">
           <h2 className="text-xl font-bold text-[#4C4541] dark:text-[#FBF3E6] flex items-center gap-2">
-            <Compass className="h-5 w-5 text-[#AEAC78]" />
-            Our Curation Standards
+            <Award className="h-5 w-5 text-[#AEAC78]" />
+            cGMP Laboratory Quality Commitment
           </h2>
           <p className="text-xs sm:text-sm text-[#7A6F68] dark:text-[#B5AAA0] leading-relaxed">
-            Our editorial catalog features websites that embody restraint, responsive elegance, and clean client-side code. Submissions and additions to the directory are evaluated for visual hierarchy, contrast accessibility, cross-device responsiveness, and respect for user autonomy.
+            All SiteNest Botanical formulas are manufactured in registered facilities adhering to Current Good Manufacturing Practices (cGMP) under 21 CFR Part 111. We never use synthetic flow agents, silicon dioxide, magnesium stearate, artificial food colorings, or genetically modified organisms.
           </p>
         </div>
       </main>

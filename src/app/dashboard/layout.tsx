@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth";
+import { isAdmin } from "@/lib/permissions";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 import ThemeToggle from "@/components/ThemeToggle";
 import Link from "next/link";
@@ -15,6 +16,8 @@ export default async function DashboardLayout({
   if (!user) {
     redirect("/login?callbackUrl=/dashboard");
   }
+
+  const userIsAdmin = isAdmin(user.role);
 
   return (
     <div className="flex h-screen bg-[#FCF0DA] dark:bg-[#171513] text-[#4C4541] dark:text-[#FBF3E6] overflow-hidden font-sans transition-colors duration-200">
@@ -32,13 +35,15 @@ export default async function DashboardLayout({
 
           <div className="flex items-center gap-3">
             <ThemeToggle />
-            <Link
-              href="/dashboard/sites/new"
-              className="inline-flex items-center gap-2 rounded-xl bg-[#F2C46A] hover:bg-[#E5B555] px-3.5 py-1.5 text-xs font-semibold text-[#2D2305] transition-colors shadow-sm"
-            >
-              <UploadCloud className="h-3.5 w-3.5" />
-              Upload ZIP
-            </Link>
+            {userIsAdmin && (
+              <Link
+                href="/dashboard/sites/new"
+                className="inline-flex items-center gap-2 rounded-xl bg-[#F2C46A] hover:bg-[#E5B555] px-3.5 py-1.5 text-xs font-semibold text-[#2D2305] transition-colors shadow-sm"
+              >
+                <UploadCloud className="h-3.5 w-3.5" />
+                Upload Product ZIP
+              </Link>
+            )}
           </div>
         </header>
 

@@ -14,6 +14,8 @@ import {
   ExternalLink,
   FolderTree,
   ImageIcon,
+  Leaf,
+  ShieldAlert,
 } from "lucide-react";
 
 interface Category {
@@ -22,10 +24,11 @@ interface Category {
   slug: string;
 }
 
-export default function NewWebsitePage() {
+export default function NewProductMicrositePage() {
   const router = useRouter();
 
   const [categories, setCategories] = useState<Category[]>([]);
+  const [isAdminUser, setIsAdminUser] = useState<boolean | null>(null);
   const [name, setName] = useState("");
   const [subdomain, setSubdomain] = useState("");
   const [categoryId, setCategoryId] = useState("");
@@ -35,11 +38,24 @@ export default function NewWebsitePage() {
   const [isDeploying, setIsDeploying] = useState(false);
   const [deployStep, setDeployStep] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [deployedSite, setDeployedSite] = useState<{ id: string; subdomain: string } | null>(null);
+  const [deployedProduct, setDeployedProduct] = useState<{ id: string; subdomain: string; slug?: string } | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    // Check authentication and admin permissions
+    fetch("/api/auth/session")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.authenticated && (data.user?.role === "ADMIN" || data.user?.role === "SUPER_ADMIN")) {
+          setIsAdminUser(true);
+        } else {
+          setIsAdminUser(false);
+        }
+      })
+      .catch(() => setIsAdminUser(false));
+
+    // Load botanical categories
     fetch("/api/admin/categories")
       .then((res) => res.json())
       .then((data) => {
@@ -68,7 +84,7 @@ export default function NewWebsitePage() {
         setFile(dropped);
         setError(null);
       } else {
-        setError("Please upload a .zip archive file.");
+        setError("Please upload a valid .zip archive file.");
       }
     }
   };
@@ -80,7 +96,7 @@ export default function NewWebsitePage() {
         setFile(selected);
         setError(null);
       } else {
-        setError("Please upload a .zip archive file.");
+        setError("Please upload a valid .zip archive file.");
       }
     }
   };
@@ -90,23 +106,23 @@ export default function NewWebsitePage() {
     setError(null);
 
     if (!name.trim()) {
-      setError("Please enter a website name");
+      setError("Please enter a product name");
       return;
     }
     if (!subdomain.trim()) {
-      setError("Please choose a subdomain");
+      setError("Please choose a product subdomain");
       return;
     }
     if (!file) {
-      setError("Please select or drop a valid ZIP archive to upload");
+      setError("Please select or drop a valid ZIP archive containing the product microsite");
       return;
     }
 
     setIsDeploying(true);
-    setDeployStep("Creating website record...");
+    setDeployStep("Creating botanical product record...");
 
     try {
-      // Step 1: Create Website
+      // Step 1: Create Website/Product
       const siteRes = await fetch("/api/sites", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -120,16 +136,16 @@ export default function NewWebsitePage() {
 
       const siteData = await siteRes.json();
       if (!siteRes.ok) {
-        throw new Error(siteData.error || "Failed to create website");
+        throw new Error(siteData.error || "Failed to create product record");
       }
 
       const site = siteData.website;
-      setDeployStep("Uploading ZIP archive to isolated storage...");
+      setDeployStep("Uploading product static ZIP archive to isolated storage...");
 
       // Step 2: Upload ZIP
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("changeLog", "Initial deployment release v1");
+      formData.append("changeLog", "Initial botanical release v1");
 
       const uploadRes = await fetch(`/api/sites/${site.id}/upload`, {
         method: "POST",
@@ -141,7 +157,7 @@ export default function NewWebsitePage() {
         throw new Error(uploadData.error || "Failed to upload and validate ZIP archive");
       }
 
-      setDeployStep("Validating files and extracting static assets...");
+      setDeployStep("Extracting HTML, CSS, JS, and image assets...");
 
       // Step 3: Poll status
       let attempts = 0;
@@ -153,7 +169,7 @@ export default function NewWebsitePage() {
           if (checkData.website?.status === "LIVE") {
             clearInterval(pollInterval);
             setIsDeploying(false);
-            setDeployedSite({ id: site.id, subdomain: site.subdomain });
+            setDeployedProduct({ id: site.id, subdomain: site.subdomain, slug: site.slug });
           } else if (checkData.website?.status === "FAILED") {
             clearInterval(pollInterval);
             setIsDeploying(false);
@@ -161,10 +177,10 @@ export default function NewWebsitePage() {
           } else if (attempts > 8) {
             clearInterval(pollInterval);
             setIsDeploying(false);
-            setDeployedSite({ id: site.id, subdomain: site.subdomain });
+            setDeployedProduct({ id: site.id, subdomain: site.subdomain, slug: site.slug });
           }
         } catch {
-          // ignore polling glitch
+          // ignore
         }
       }, 1000);
     } catch (err: unknown) {
@@ -174,23 +190,60 @@ export default function NewWebsitePage() {
     }
   };
 
+  // If user is a viewer (not admin), show restricted access card
+  if (isAdminUser === false) {
+    return (
+      <div className="max-w-2xl mx-auto py-16 text-center space-y-6">
+        <div className="rounded-2xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#24201C] p-8 space-y-4 shadow-sm">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#AEAC78]/20 text-[#5A5B35] dark:text-[#AEAC78]">
+            <ShieldAlert className="h-7 w-7" />
+          </div>
+          <h2 className="text-2xl font-bold text-[#4C4541] dark:text-[#FBF3E6]">
+            Administrator Privileges Required
+          </h2>
+          <p className="text-sm text-[#7A6F68] dark:text-[#B5AAA0] leading-relaxed max-w-lg mx-auto">
+            Public viewers and registered customers cannot upload static site packages. Only verified administrators have permission to register botanical products and deploy custom subdomains.
+          </p>
+          <div className="pt-4 flex items-center justify-center gap-4">
+            <button
+              onClick={() => router.push("/products")}
+              className="rounded-xl bg-[#F2C46A] hover:bg-[#E5B555] px-5 py-2.5 text-xs font-semibold text-[#2D2305] transition-colors shadow-sm"
+            >
+              Browse Botanical Products
+            </button>
+            <button
+              onClick={() => router.push("/login")}
+              className="rounded-xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FCF0DA]/60 dark:bg-[#1E1A17] px-5 py-2.5 text-xs font-semibold text-[#4C4541] dark:text-[#FBF3E6] hover:bg-[#F5E5C9] transition-colors"
+            >
+              Sign In as Admin
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-3xl mx-auto space-y-8">
       {/* Title */}
       <div>
+        <div className="inline-flex items-center gap-2 rounded-full border border-[#AEAC78]/50 bg-[#FFF8ED] dark:bg-[#24201C] px-3.5 py-1 text-xs font-semibold text-[#5A5B35] dark:text-[#AEAC78] shadow-sm mb-3">
+          <Leaf className="h-3.5 w-3.5 text-[#AEAC78]" />
+          <span>Admin Subdomain Deployment</span>
+        </div>
         <h1 className="text-2xl font-bold tracking-tight text-[#4C4541] dark:text-[#FBF3E6]">
-          Deploy a New Static Website
+          Register Botanical Product & Deploy Subdomain
         </h1>
         <p className="mt-1 text-sm text-[#7A6F68] dark:text-[#B5AAA0]">
-          Upload your project as a ZIP archive. We will unpack your static assets (HTML, CSS, JS, images, fonts), assign your custom subdomain, and publish it live instantly.
+          Upload the product&apos;s static microsite as a ZIP archive. Each botanical supplement receives its own dedicated subdomain with isolated static routing.
         </p>
       </div>
 
-      {/* ZIP Structure Guide Accordion/Card */}
+      {/* ZIP Structure Guide */}
       <div className="rounded-2xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#24201C] p-5 shadow-sm space-y-4">
         <div className="flex items-center gap-2 text-sm font-semibold text-[#4C4541] dark:text-[#FBF3E6]">
           <FolderTree className="h-4 w-4 text-[#AEAC78]" />
-          <span>Recommended ZIP Archive Structure</span>
+          <span>Recommended Product ZIP Structure</span>
         </div>
 
         <p className="text-xs text-[#7A6F68] dark:text-[#B5AAA0] leading-relaxed">
@@ -198,53 +251,53 @@ export default function NewWebsitePage() {
         </p>
 
         <div className="rounded-xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FCF0DA]/60 dark:bg-[#1E1A17] p-4 font-mono text-xs text-[#4C4541] dark:text-[#FBF3E6] overflow-x-auto">
-          <pre>{`my-website.zip
-├── index.html           <- Required primary entry point
-├── styles.css           <- CSS stylesheets (or inside css/)
-├── app.js               <- Client-side JavaScript (or inside js/)
-└── images/              <- Supported folder for photos, icons, graphics
-    ├── logo.png
-    ├── banner.jpg
-    └── icon.svg`}</pre>
+          <pre>{`supplement-package.zip
+├── index.html           <- Primary product landing page
+├── styles.css           <- Custom styling (or inside css/)
+├── app.js               <- Client scripts (or inside js/)
+└── images/              <- Product photos, ingredient badges, botanical graphics
+    ├── bottle-render.png
+    ├── purity-seal.svg
+    └── herbal-source.jpg`}</pre>
         </div>
 
         <div className="flex items-center gap-2 text-[11px] text-[#7A6F68] dark:text-[#B5AAA0]">
           <ImageIcon className="h-3.5 w-3.5 text-[#AEAC78] shrink-0" />
-          <span>In your HTML, reference images using relative paths, e.g.: <code className="font-mono text-[#4C4541] dark:text-[#FBF3E6]">&lt;img src="images/logo.png" alt="Logo" /&gt;</code></span>
+          <span>Relative image paths in your HTML are fully supported, e.g.: <code className="font-mono text-[#4C4541] dark:text-[#FBF3E6]">&lt;img src=&quot;images/bottle-render.png&quot; /&gt;</code></span>
         </div>
       </div>
 
       {/* Success banner if deployed */}
-      {deployedSite && (
+      {deployedProduct && (
         <div className="rounded-2xl border border-[#AEAC78]/40 bg-[#FFF8ED] dark:bg-[#24201C] p-6 space-y-4 shadow-sm">
           <div className="flex items-center gap-3 text-[#5A5B35] dark:text-[#AEAC78]">
             <CheckCircle2 className="h-6 w-6 text-[#AEAC78]" />
-            <h3 className="text-lg font-semibold text-[#4C4541] dark:text-[#FBF3E6]">Website Successfully Deployed!</h3>
+            <h3 className="text-lg font-semibold text-[#4C4541] dark:text-[#FBF3E6]">Product Microsite Live!</h3>
           </div>
           <p className="text-sm text-[#7A6F68] dark:text-[#B5AAA0]">
-            Your website is live and served through your dedicated subdomain:
+            The product is now provisioned and publicly accessible at its dedicated subdomain:
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-[#FCF0DA]/60 dark:bg-[#1E1A17] border border-[#DECBB0] dark:border-[#3D352F] rounded-xl p-4">
             <div className="font-mono text-sm text-[#5A5B35] dark:text-[#AEAC78] flex items-center gap-2">
               <Globe className="h-4 w-4" />
-              <span>{deployedSite.subdomain}.sitenest.com</span>
+              <span>{deployedProduct.subdomain}.sitenest.com</span>
             </div>
             <div className="flex items-center gap-3">
               <a
-                href={`/s/${deployedSite.subdomain}`}
+                href={`/s/${deployedProduct.subdomain}`}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-1.5 rounded-xl bg-[#F2C46A] hover:bg-[#E5B555] px-4 py-2 text-xs font-semibold text-[#2D2305] transition-colors shadow-sm"
               >
-                Open Live Site
+                Open Subdomain Site
                 <ExternalLink className="h-3.5 w-3.5" />
               </a>
               <button
                 type="button"
-                onClick={() => router.push(`/dashboard/sites/${deployedSite.id}`)}
+                onClick={() => router.push(`/products/${deployedProduct.slug || deployedProduct.subdomain}`)}
                 className="inline-flex items-center gap-1.5 rounded-xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#24201C] px-4 py-2 text-xs font-medium text-[#4C4541] dark:text-[#FBF3E6] hover:bg-[#F5E5C9] dark:hover:bg-[#2D2823] transition-colors"
               >
-                Manage Website
+                View Product Details
               </button>
             </div>
           </div>
@@ -252,7 +305,7 @@ export default function NewWebsitePage() {
       )}
 
       {/* Main Form */}
-      {!deployedSite && (
+      {!deployedProduct && (
         <form onSubmit={handleDeploy} className="space-y-6">
           {error && (
             <div className="rounded-xl border border-red-500/30 bg-red-950/20 p-4 flex items-start gap-3 text-red-500 dark:text-red-300 text-sm shadow-sm">
@@ -266,15 +319,15 @@ export default function NewWebsitePage() {
 
           <div className="rounded-2xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#24201C] p-6 sm:p-8 space-y-6 shadow-sm">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {/* Website Name */}
+              {/* Product Name */}
               <div className="space-y-2">
                 <label className="text-xs font-semibold uppercase tracking-wider text-[#4C4541] dark:text-[#FBF3E6]">
-                  Website Name *
+                  Product Name *
                 </label>
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Modern Architecture Portfolio"
+                  placeholder="e.g. Pure Marine Collagen Peptides"
                   value={name}
                   onChange={(e) => handleNameChange(e.target.value)}
                   className="w-full rounded-xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FCF0DA]/50 dark:bg-[#1E1A17] px-3.5 py-2.5 text-sm text-[#4C4541] dark:text-[#FBF3E6] placeholder-[#7A6F68]/60 focus:border-[#AEAC78] focus:outline-none"
@@ -284,7 +337,7 @@ export default function NewWebsitePage() {
               {/* Category */}
               <div className="space-y-2">
                 <label className="text-xs font-semibold uppercase tracking-wider text-[#4C4541] dark:text-[#FBF3E6]">
-                  Category
+                  Health Goal Category
                 </label>
                 <CustomSelect
                   value={categoryId}
@@ -301,13 +354,13 @@ export default function NewWebsitePage() {
             {/* Subdomain Input */}
             <div className="space-y-2">
               <label className="text-xs font-semibold uppercase tracking-wider text-[#4C4541] dark:text-[#FBF3E6]">
-                Subdomain *
+                Product Subdomain *
               </label>
               <div className="flex rounded-xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FCF0DA]/50 dark:bg-[#1E1A17] overflow-hidden focus-within:border-[#AEAC78]">
                 <input
                   type="text"
                   required
-                  placeholder="myportfolio"
+                  placeholder="collagen"
                   value={subdomain}
                   onChange={(e) => setSubdomain(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ""))}
                   className="flex-1 bg-transparent px-3.5 py-2.5 text-sm text-[#4C4541] dark:text-[#FBF3E6] placeholder-[#7A6F68]/60 focus:outline-none font-mono"
@@ -317,18 +370,18 @@ export default function NewWebsitePage() {
                 </span>
               </div>
               <p className="text-[11px] text-[#7A6F68] dark:text-[#B5AAA0]">
-                3-32 letters, numbers, and hyphens. Your website will be available at this address.
+                Dedicated product address: <span className="font-mono text-[#5A5B35] dark:text-[#AEAC78]">https://{subdomain || "your-product"}.sitenest.com</span>
               </p>
             </div>
 
             {/* Description */}
             <div className="space-y-2">
               <label className="text-xs font-semibold uppercase tracking-wider text-[#4C4541] dark:text-[#FBF3E6]">
-                Description (Optional)
+                Formulation & Active Bioactives Description
               </label>
               <textarea
                 rows={2}
-                placeholder="Brief summary of the website..."
+                placeholder="e.g. Wild-caught hydrolysed marine collagen types I & III with natural hyaluronic acid and vitamin C..."
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 className="w-full rounded-xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FCF0DA]/50 dark:bg-[#1E1A17] px-3.5 py-2.5 text-sm text-[#4C4541] dark:text-[#FBF3E6] placeholder-[#7A6F68]/60 focus:border-[#AEAC78] focus:outline-none"
@@ -338,7 +391,7 @@ export default function NewWebsitePage() {
             {/* Drag & Drop ZIP Dropzone */}
             <div className="space-y-2">
               <label className="text-xs font-semibold uppercase tracking-wider text-[#4C4541] dark:text-[#FBF3E6]">
-                Website ZIP Archive *
+                Product Static Website ZIP Archive *
               </label>
               <div
                 onDragOver={(e) => e.preventDefault()}
@@ -368,7 +421,7 @@ export default function NewWebsitePage() {
                       {(file.size / (1024 * 1024)).toFixed(2)} MB • Ready to deploy
                     </p>
                     <span className="inline-block text-[11px] text-[#5A5B35] dark:text-[#AEAC78] underline">
-                      Click to choose a different file
+                      Click to choose a different archive
                     </span>
                   </div>
                 ) : (
@@ -377,7 +430,7 @@ export default function NewWebsitePage() {
                       <UploadCloud className="h-6 w-6 text-[#AEAC78]" />
                     </div>
                     <p className="text-sm font-semibold text-[#4C4541] dark:text-[#FBF3E6]">
-                      Drag & drop your static ZIP here, or <span className="text-[#AEAC78] underline">browse</span>
+                      Drag & drop your product ZIP here, or <span className="text-[#AEAC78] underline">browse</span>
                     </p>
                     <p className="text-xs text-[#7A6F68] dark:text-[#B5AAA0]">
                       Supports HTML, CSS, JS, images (PNG, JPG, SVG, WebP), fonts (max 50MB)
@@ -391,9 +444,9 @@ export default function NewWebsitePage() {
             <div className="rounded-xl bg-[#FCF0DA]/60 dark:bg-[#1E1A17] border border-[#DECBB0] dark:border-[#3D352F] p-4 flex items-start gap-3 text-xs text-[#7A6F68] dark:text-[#B5AAA0]">
               <ShieldCheck className="h-4 w-4 shrink-0 text-[#AEAC78] mt-0.5" />
               <div>
-                <p className="font-medium text-[#4C4541] dark:text-[#FBF3E6]">Automatic Extraction & Security Validation</p>
+                <p className="font-medium text-[#4C4541] dark:text-[#FBF3E6]">Automatic Extraction & Isolated Subdomain Sandboxing</p>
                 <p className="mt-0.5 leading-relaxed">
-                  The archive must contain an <code className="text-[#4C4541] dark:text-[#FBF3E6] font-mono">index.html</code> file. All subfolders (e.g. <code className="font-mono">images/</code>, <code className="font-mono">assets/</code>, <code className="font-mono">css/</code>) are preserved and served relative to the root. Executable files (.php, .sh, .exe) are blocked automatically.
+                  The archive must contain an <code className="text-[#4C4541] dark:text-[#FBF3E6] font-mono">index.html</code> entry point. Folders like <code className="font-mono">images/</code>, <code className="font-mono">css/</code>, and <code className="font-mono">js/</code> are extracted with relative paths preserved. Executable scripts are blocked for security.
                 </p>
               </div>
             </div>
@@ -403,7 +456,7 @@ export default function NewWebsitePage() {
           <div className="flex items-center justify-end gap-4">
             <button
               type="button"
-              onClick={() => router.push("/dashboard/sites")}
+              onClick={() => router.push("/products")}
               className="rounded-xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#24201C] px-5 py-2.5 text-sm font-medium text-[#4C4541] dark:text-[#FBF3E6] hover:bg-[#F5E5C9] dark:hover:bg-[#2D2823] transition-colors"
             >
               Cancel
@@ -416,12 +469,12 @@ export default function NewWebsitePage() {
               {isDeploying ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  <span>{deployStep || "Deploying..."}</span>
+                  <span>{deployStep || "Deploying Subdomain..."}</span>
                 </>
               ) : (
                 <>
                   <UploadCloud className="h-4 w-4" />
-                  Deploy Website
+                  Deploy Product Microsite
                 </>
               )}
             </button>
