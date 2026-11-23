@@ -110,14 +110,14 @@ export default function PricingPage() {
 
               <div className="pt-8">
                 <Link
-                  href="/register"
+                  href="/sites"
                   className={`w-full inline-flex items-center justify-center rounded-xl py-2.5 text-xs font-semibold transition-colors ${
                     p.popular
                       ? "bg-indigo-600 text-white hover:bg-indigo-500"
                       : "bg-zinc-800 text-zinc-200 hover:bg-zinc-700 hover:text-white"
                   }`}
                 >
-                  {p.cta}
+                  Explore Showcase
                 </Link>
               </div>
             </div>

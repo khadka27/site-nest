@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Layers, LogIn, AlertCircle, Loader2 } from "lucide-react";
+import { Layers, Shield, AlertCircle, Loader2, Globe, KeyRound } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -54,11 +54,17 @@ export default function LoginPage() {
             </div>
             <span>Site<span className="text-indigo-400">Nest</span></span>
           </Link>
-          <h2 className="text-xl font-bold tracking-tight text-white pt-2">
-            Sign in to your control panel
+          <div className="pt-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-purple-500/10 px-3 py-1 text-xs font-semibold text-purple-400 border border-purple-500/20">
+              <Shield className="h-3.5 w-3.5" />
+              Admin Portal
+            </span>
+          </div>
+          <h2 className="text-2xl font-bold tracking-tight text-white pt-1">
+            Administrator Sign In
           </h2>
-          <p className="text-xs text-zinc-400">
-            Enter your credentials to manage your hosted websites and deployments.
+          <p className="text-xs text-zinc-400 max-w-xs mx-auto">
+            Sign in with admin credentials to upload ZIP archives and manage hosted sites.
           </p>
         </div>
 
@@ -72,12 +78,12 @@ export default function LoginPage() {
         <form onSubmit={handleLogin} className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6 sm:p-8 space-y-5">
           <div className="space-y-1.5">
             <label className="text-xs font-semibold uppercase tracking-wider text-zinc-300">
-              Email Address
+              Admin Email
             </label>
             <input
               type="email"
               required
-              placeholder="you@domain.com"
+              placeholder="admin@sitenest.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full rounded-xl border border-zinc-700 bg-zinc-900 px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 focus:border-indigo-500 focus:outline-none"
@@ -103,17 +109,24 @@ export default function LoginPage() {
             disabled={loading}
             className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 py-2.5 text-xs font-semibold text-white hover:bg-indigo-500 shadow-md transition-colors disabled:opacity-50"
           >
-            {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <LogIn className="h-4 w-4" />}
-            Sign In
+            {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Shield className="h-4 w-4" />}
+            Sign In as Admin
           </button>
         </form>
 
-        <p className="text-center text-xs text-zinc-500">
-          Don&apos;t have an account yet?{" "}
-          <Link href="/register" className="font-semibold text-indigo-400 hover:text-indigo-300 underline">
-            Register here
+        {/* Public Visitor Notice */}
+        <div className="rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-4 text-center space-y-2">
+          <p className="text-xs text-zinc-400">
+            Looking to browse hosted websites? Visitors do not need an account.
+          </p>
+          <Link
+            href="/sites"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-400 hover:text-indigo-300 underline"
+          >
+            <Globe className="h-3.5 w-3.5" />
+            Explore Live Websites Directory →
           </Link>
-        </p>
+        </div>
       </div>
     </div>
   );

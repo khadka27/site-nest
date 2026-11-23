@@ -78,17 +78,17 @@ export default async function HomePage() {
               {/* Buttons */}
               <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link
-                  href={hero?.primaryButton?.url || "/register"}
+                  href={hero?.primaryButton?.url || "/sites"}
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-7 py-3.5 text-base font-semibold text-white hover:bg-indigo-500 shadow-lg shadow-indigo-600/30 transition-all hover:-translate-y-0.5"
                 >
-                  <UploadCloud className="h-5 w-5" />
-                  {hero?.primaryButton?.text || "Deploy Your Site Free"}
+                  <Globe className="h-5 w-5" />
+                  {hero?.primaryButton?.text || "Explore Showcase"}
                 </Link>
                 <Link
-                  href={hero?.secondaryButton?.url || "/sites"}
+                  href={hero?.secondaryButton?.url || "/login"}
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-zinc-800 bg-zinc-900/80 px-7 py-3.5 text-base font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all"
                 >
-                  {hero?.secondaryButton?.text || "Explore Directory"}
+                  {hero?.secondaryButton?.text || "Admin Sign In"}
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
@@ -343,14 +343,14 @@ export default async function HomePage() {
 
                     <div className="pt-8">
                       <Link
-                        href="/register"
+                        href="/sites"
                         className={`w-full inline-flex items-center justify-center rounded-xl py-2.5 text-xs font-semibold transition-colors ${
                           plan.popular
                             ? "bg-indigo-600 text-white hover:bg-indigo-500"
                             : "bg-zinc-800 text-zinc-200 hover:bg-zinc-700 hover:text-white"
                         }`}
                       >
-                        {plan.cta || "Get Started"}
+                        Explore Published Sites
                       </Link>
                     </div>
                   </div>

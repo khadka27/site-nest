@@ -24,7 +24,7 @@ export default function Footer() {
             <h4 className="text-sm font-semibold text-white tracking-wider uppercase mb-4">Platform</h4>
             <ul className="space-y-2.5 text-sm">
               <li><Link href="/sites" className="hover:text-white transition-colors">Website Directory</Link></li>
-              <li><Link href="/dashboard/sites/new" className="hover:text-white transition-colors">Deploy ZIP</Link></li>
+              <li><Link href="/login" className="hover:text-white transition-colors">Admin Portal</Link></li>
               <li><Link href="/pricing" className="hover:text-white transition-colors">Pricing Plans</Link></li>
               <li><Link href="/#features" className="hover:text-white transition-colors">Features</Link></li>
             </ul>

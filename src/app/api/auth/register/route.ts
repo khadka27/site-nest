@@ -30,9 +30,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "An account with this email already exists" }, { status: 409 });
     }
 
-    // First user becomes SUPER_ADMIN, otherwise USER
+    // Check if registration is allowed: only allow if 0 users exist (initial setup)
     const userCount = await prisma.user.count();
-    const role = userCount === 0 ? "SUPER_ADMIN" : "USER";
+    if (userCount > 0) {
+      return NextResponse.json(
+        { error: "Public registration is disabled. Visitors can directly view websites in the showcase. Only administrators can sign in." },
+        { status: 403 }
+      );
+    }
+    const role = "SUPER_ADMIN";
 
     const passwordHash = await hashPassword(password);
 

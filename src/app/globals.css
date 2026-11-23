@@ -1,26 +1,39 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-canvas-light: #FCF0DA;
+  --color-sage: #AEAC78;
+  --color-honey: #F2C46A;
+  --color-charcoal: #4C4541;
+  --color-canvas-dark: #171513;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(174, 172, 120, 0.4);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(242, 196, 106, 0.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Subtle architectural drafting grid overlay */
+.bg-craft-grid {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(76, 69, 65, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(76, 69, 65, 0.05) 1px, transparent 1px);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.dark .bg-craft-grid {
+  background-image: 
+    linear-gradient(to right, rgba(242, 196, 106, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(242, 196, 106, 0.04) 1px, transparent 1px);
 }

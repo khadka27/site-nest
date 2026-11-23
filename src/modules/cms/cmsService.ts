@@ -39,19 +39,19 @@ export const DEFAULT_HOMEPAGE_SECTIONS: CMSSectionData[] = [
       badge: "🚀 Instant Static Hosting & Wildcard Subdomains",
       title: "Upload. Deploy. Go Live.",
       subtitle:
-        "The modern hosting platform for static websites. Drop your ZIP archive and receive an automatic isolated subdomain with zero-downtime rollbacks, instant SSL, and blazing Nginx delivery.",
+        "The modern hosting platform for static websites. Admin-curated deployments with automated subdomains, isolated directories, and zero-downtime rollbacks for public viewing.",
       primaryButton: {
-        text: "Deploy Your Site Free",
-        url: "/register",
+        text: "Explore Showcase",
+        url: "/sites",
       },
       secondaryButton: {
-        text: "Explore Directory",
-        url: "/sites",
+        text: "Admin Sign In",
+        url: "/login",
       },
       highlights: [
         "100% Static HTML/CSS/JS",
-        "Instant Subdomain Creation",
-        "Rollback in 1-Click",
+        "Direct Public Access (No Login Required)",
+        "Instant Wildcard Subdomains",
       ],
     },
   },
