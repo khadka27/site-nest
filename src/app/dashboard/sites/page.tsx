@@ -25,14 +25,14 @@ export default async function MyWebsitesPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-white">My Websites</h1>
-          <p className="text-sm text-zinc-400">
+          <h1 className="text-2xl font-bold tracking-tight text-[#4C4541] dark:text-[#FBF3E6]">My Websites</h1>
+          <p className="text-sm text-[#7A6F68] dark:text-[#B5AAA0]">
             Manage your deployed static websites, subdomains, and releases.
           </p>
         </div>
         <Link
           href="/dashboard/sites/new"
-          className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500 shadow-md transition-colors"
+          className="inline-flex items-center gap-2 rounded-xl bg-[#F2C46A] hover:bg-[#E5B555] px-4 py-2 text-sm font-semibold text-[#2D2305] shadow-sm transition-colors"
         >
           <UploadCloud className="h-4 w-4" />
           Deploy New Site
@@ -40,18 +40,18 @@ export default async function MyWebsitesPage() {
       </div>
 
       {websites.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-zinc-800 p-16 text-center">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-zinc-900 text-zinc-400 mb-4">
+        <div className="rounded-2xl border border-dashed border-[#DECBB0] dark:border-[#3D352F] p-16 text-center bg-[#FFF8ED] dark:bg-[#24201C] shadow-sm">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-[#F5E5C9] dark:bg-[#1E1A17] text-[#AEAC78] mb-4">
             <Globe className="h-6 w-6" />
           </div>
-          <h3 className="text-base font-semibold text-white">No websites deployed</h3>
-          <p className="mt-1 text-sm text-zinc-400 max-w-sm mx-auto">
+          <h3 className="text-base font-semibold text-[#4C4541] dark:text-[#FBF3E6]">No websites deployed</h3>
+          <p className="mt-1 text-sm text-[#7A6F68] dark:text-[#B5AAA0] max-w-sm mx-auto">
             You have not launched any static websites yet. Create your first site now.
           </p>
           <div className="mt-6">
             <Link
               href="/dashboard/sites/new"
-              className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-indigo-500"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#F2C46A] hover:bg-[#E5B555] px-4 py-2.5 text-sm font-semibold text-[#2D2305] shadow-sm"
             >
               Upload Project ZIP
             </Link>
@@ -65,64 +65,64 @@ export default async function MyWebsitesPage() {
             return (
               <div
                 key={site.id}
-                className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 hover:border-zinc-700 transition-colors flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+                className="rounded-2xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#24201C] p-5 hover:border-[#AEAC78] dark:hover:border-[#AEAC78] transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm"
               >
                 <div className="flex items-start gap-4">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 shrink-0">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#F5E5C9] dark:bg-[#1E1A17] text-[#AEAC78] border border-[#DECBB0] dark:border-[#3D352F] shrink-0">
                     <Globe className="h-5 w-5" />
                   </div>
                   <div>
                     <div className="flex items-center gap-3">
-                      <h3 className="font-semibold text-white text-base">{site.name}</h3>
+                      <h3 className="font-semibold text-[#4C4541] dark:text-[#FBF3E6] text-base">{site.name}</h3>
                       <span
                         className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium ${
                           isLive
-                            ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                            ? "bg-[#F2C46A]/25 text-[#2D2305] dark:text-[#F2C46A] border border-[#F2C46A]/40 font-semibold"
                             : site.status === "DEPLOYING"
-                            ? "bg-amber-500/10 text-amber-400 border border-amber-500/20"
-                            : "bg-zinc-800 text-zinc-400"
+                            ? "bg-amber-500/10 text-amber-500 border border-amber-500/20"
+                            : "bg-[#F5E5C9] dark:bg-[#2D2823] text-[#7A6F68] dark:text-[#B5AAA0]"
                         }`}
                       >
-                        <span className={`h-1.5 w-1.5 rounded-full ${isLive ? "bg-emerald-400" : "bg-amber-400"}`} />
+                        <span className={`h-1.5 w-1.5 rounded-full ${isLive ? "bg-[#AEAC78]" : "bg-amber-400"}`} />
                         {site.status}
                       </span>
                     </div>
 
-                    <div className="flex items-center gap-4 mt-1 text-xs text-zinc-400">
-                      <span className="font-mono text-zinc-300">
+                    <div className="flex items-center gap-4 mt-1 text-xs text-[#7A6F68] dark:text-[#B5AAA0]">
+                      <span className="font-mono text-[#5A5B35] dark:text-[#AEAC78]">
                         {site.subdomain}.sitenest.com
                       </span>
                       {site.category && (
-                        <span className="border-l border-zinc-800 pl-4 text-zinc-500">
+                        <span className="border-l border-[#DECBB0] dark:border-[#3D352F] pl-4">
                           {site.category.name}
                         </span>
                       )}
-                      <span className="border-l border-zinc-800 pl-4 font-mono">
+                      <span className="border-l border-[#DECBB0] dark:border-[#3D352F] pl-4 font-mono">
                         Version {latest?.version || 1}
                       </span>
                     </div>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 w-full sm:w-auto justify-end pt-3 sm:pt-0 border-t sm:border-t-0 border-zinc-800/80">
+                <div className="flex items-center gap-3 w-full sm:w-auto justify-end pt-3 sm:pt-0 border-t sm:border-t-0 border-[#DECBB0] dark:border-[#3D352F]">
                   <Link
                     href={`/s/${site.subdomain}`}
                     target="_blank"
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-1.5 text-xs font-medium text-zinc-300 hover:bg-zinc-800 hover:text-white transition-colors"
+                    className="inline-flex items-center gap-1.5 rounded-xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FCF0DA]/50 dark:bg-[#1E1A17] px-3 py-1.5 text-xs font-medium text-[#4C4541] dark:text-[#FBF3E6] hover:bg-[#F5E5C9] dark:hover:bg-[#2D2823] transition-colors"
                   >
                     <Eye className="h-3.5 w-3.5" />
                     Live Site
                   </Link>
                   <Link
                     href={`/dashboard/sites/${site.id}/deployments`}
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-1.5 text-xs font-medium text-zinc-300 hover:bg-zinc-800 hover:text-white transition-colors"
+                    className="inline-flex items-center gap-1.5 rounded-xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FCF0DA]/50 dark:bg-[#1E1A17] px-3 py-1.5 text-xs font-medium text-[#4C4541] dark:text-[#FBF3E6] hover:bg-[#F5E5C9] dark:hover:bg-[#2D2823] transition-colors"
                   >
                     <Layers className="h-3.5 w-3.5" />
                     Releases
                   </Link>
                   <Link
                     href={`/dashboard/sites/${site.id}`}
-                    className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-600 px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-indigo-500 transition-colors"
+                    className="inline-flex items-center gap-1.5 rounded-xl bg-[#F2C46A] hover:bg-[#E5B555] px-3.5 py-1.5 text-xs font-semibold text-[#2D2305] transition-colors shadow-sm"
                   >
                     Manage
                     <ArrowRight className="h-3 w-3" />
