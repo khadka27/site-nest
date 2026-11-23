@@ -84,7 +84,7 @@ export default async function AdminDeploymentsPage() {
                   {formatDate(d.createdAt)}
                 </td>
                 <td className="px-5 py-4 text-[#7A6F68] dark:text-[#B5AAA0] max-w-xs truncate">
-                  {d.notes || "—"}
+                  {d.errorMessage || d.changeLog || "—"}
                 </td>
               </tr>
             ))}
