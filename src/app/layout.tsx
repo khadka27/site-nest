@@ -12,22 +12,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="h-full antialiased dark" suppressHydrationWarning>
+    <html lang="en" className="h-full antialiased" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
                 try {
-                  const stored = localStorage.getItem('sitenest_theme');
-                  if (stored === 'light') {
-                    document.documentElement.classList.remove('dark');
-                  } else if (stored === 'dark') {
+                  var stored = localStorage.getItem('sitenest_theme');
+                  var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  var isDark = stored !== null ? (stored === 'dark') : prefersDark;
+                  if (isDark) {
                     document.documentElement.classList.add('dark');
-                  } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-                    document.documentElement.classList.remove('dark');
                   } else {
-                    document.documentElement.classList.add('dark');
+                    document.documentElement.classList.remove('dark');
                   }
                 } catch (e) {}
               })();
