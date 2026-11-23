@@ -3,39 +3,40 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --color-canvas-light: #FCF0DA;
-  --color-sage: #AEAC78;
-  --color-honey: #F2C46A;
-  --color-charcoal: #4C4541;
-  --color-canvas-dark: #171513;
+  --color-canvas-light: #FFFFFF;
+  --color-canvas-subtle: #F9FAFB;
+  --color-border: #E5E7EB;
+  --color-charcoal: #111827;
+  --color-muted: #6B7280;
+  --color-canvas-dark: #09090B;
 }
 
-/* Custom scrollbars */
+/* Custom modern scrollbars */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(174, 172, 120, 0.4);
+  background: rgba(156, 163, 175, 0.4);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(242, 196, 106, 0.6);
+  background: rgba(107, 114, 128, 0.7);
 }
 
-/* Subtle architectural drafting grid overlay */
+/* Subtle modern architectural drafting grid */
 .bg-craft-grid {
   background-size: 32px 32px;
   background-image: 
-    linear-gradient(to right, rgba(76, 69, 65, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(76, 69, 65, 0.05) 1px, transparent 1px);
+    linear-gradient(to right, rgba(17, 24, 39, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(17, 24, 39, 0.03) 1px, transparent 1px);
 }
 
 .dark .bg-craft-grid {
   background-image: 
-    linear-gradient(to right, rgba(242, 196, 106, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(242, 196, 106, 0.04) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }

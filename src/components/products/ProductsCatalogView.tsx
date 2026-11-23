@@ -21,7 +21,6 @@ import {
   Moon,
   Brain,
   Layers,
-  Send,
   Check,
 } from "lucide-react";
 
@@ -163,15 +162,15 @@ export default function ProductsCatalogView({
   const getCategoryIcon = (slug: string) => {
     switch (slug) {
       case "vitality":
-        return <Zap className="h-3.5 w-3.5 text-[#AEAC78]" />;
+        return <Zap className="h-3.5 w-3.5 text-[#6B7280] dark:text-[#9CA3AF]" />;
       case "cognitive":
-        return <Brain className="h-3.5 w-3.5 text-[#AEAC78]" />;
+        return <Brain className="h-3.5 w-3.5 text-[#6B7280] dark:text-[#9CA3AF]" />;
       case "recovery":
-        return <Moon className="h-3.5 w-3.5 text-[#AEAC78]" />;
+        return <Moon className="h-3.5 w-3.5 text-[#6B7280] dark:text-[#9CA3AF]" />;
       case "longevity":
-        return <Leaf className="h-3.5 w-3.5 text-[#AEAC78]" />;
+        return <Leaf className="h-3.5 w-3.5 text-[#6B7280] dark:text-[#9CA3AF]" />;
       default:
-        return <FlaskConical className="h-3.5 w-3.5 text-[#AEAC78]" />;
+        return <FlaskConical className="h-3.5 w-3.5 text-[#6B7280] dark:text-[#9CA3AF]" />;
     }
   };
 
@@ -231,20 +230,20 @@ export default function ProductsCatalogView({
       {/* ========================================================= */}
       {/* HERO SECTION WITH "SHOP" DISPLAY WATERMARK & INLINE SEARCH */}
       {/* ========================================================= */}
-      <section className="relative overflow-hidden rounded-3xl bg-[#FFF8ED] dark:bg-[#1E1A17] border border-[#DECBB0] dark:border-[#3D352F] shadow-sm transition-colors duration-200">
+      <section className="relative overflow-hidden rounded-3xl bg-[#F9FAFB] dark:bg-[#121214] border border-[#E5E7EB] dark:border-[#27272A] shadow-sm transition-colors duration-200">
         {/* Decorative architectural background texture with giant "Shop" lettering */}
         <div className="absolute inset-0 select-none pointer-events-none overflow-hidden">
-          <span className="absolute -top-10 sm:-top-16 left-1/2 -translate-x-1/2 text-[120px] sm:text-[180px] lg:text-[230px] font-black tracking-tight text-[#4C4541]/[0.04] dark:text-[#FBF3E6]/[0.03] uppercase font-sans">
+          <span className="absolute -top-10 sm:-top-16 left-1/2 -translate-x-1/2 text-[120px] sm:text-[180px] lg:text-[230px] font-black tracking-tight text-[#111827]/[0.04] dark:text-white/[0.03] uppercase font-sans">
             Shop
           </span>
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#FFF8ED]/50 to-[#FFF8ED] dark:via-[#1E1A17]/60 dark:to-[#1E1A17]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#F9FAFB]/60 to-[#F9FAFB] dark:via-[#121214]/60 dark:to-[#121214]" />
         </div>
 
         <div className="relative px-6 py-12 sm:px-10 sm:py-16 lg:px-12 flex flex-col justify-between min-h-[220px]">
           {/* Top category label & micro badge */}
           <div className="flex items-center gap-2 mb-4">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#AEAC78]/15 text-[#5A5B35] dark:text-[#AEAC78] border border-[#AEAC78]/30">
-              <Leaf className="h-3 w-3 text-[#AEAC78]" />
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-white dark:bg-[#18181B] text-[#4B5563] dark:text-[#9CA3AF] border border-[#E5E7EB] dark:border-[#27272A] shadow-sm">
+              <Leaf className="h-3 w-3 text-[#111827] dark:text-white" />
               Artisan Botanical Nutrition
             </span>
           </div>
@@ -252,10 +251,10 @@ export default function ProductsCatalogView({
           {/* Headline and search bar row matching reference UI */}
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pt-2">
             <div className="space-y-2 max-w-xl">
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#4C4541] dark:text-[#FBF3E6]">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#111827] dark:text-[#F9FAFB]">
                 Give All You Need
               </h1>
-              <p className="text-xs sm:text-sm text-[#7A6F68] dark:text-[#B5AAA0] leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#6B7280] dark:text-[#9CA3AF] leading-relaxed">
                 Pure clinical formulations synthesized for cellular longevity and daily vitality. Every product is hosted with full lab assay transparency on its own dedicated research microsite.
               </p>
             </div>
@@ -265,18 +264,18 @@ export default function ProductsCatalogView({
               onSubmit={handleSearchSubmit}
               className="w-full lg:w-[420px] shrink-0"
             >
-              <div className="relative flex items-center bg-[#FCF0DA]/80 dark:bg-[#171513] border border-[#DECBB0] dark:border-[#3D352F] rounded-full p-1.5 pl-4 shadow-sm focus-within:border-[#AEAC78] focus-within:ring-2 focus-within:ring-[#AEAC78]/20 transition-all">
-                <Search className="h-4 w-4 text-[#7A6F68] dark:text-[#B5AAA0] shrink-0 mr-2" />
+              <div className="relative flex items-center bg-white dark:bg-[#18181B] border border-[#E5E7EB] dark:border-[#27272A] rounded-full p-1.5 pl-4 shadow-sm focus-within:border-[#111827] dark:focus-within:border-white transition-all">
+                <Search className="h-4 w-4 text-[#9CA3AF] shrink-0 mr-2" />
                 <input
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Search on SiteNest..."
-                  className="w-full bg-transparent text-xs sm:text-sm text-[#4C4541] dark:text-[#FBF3E6] placeholder-[#7A6F68]/70 focus:outline-none"
+                  className="w-full bg-transparent text-xs sm:text-sm text-[#111827] dark:text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none"
                 />
                 <button
                   type="submit"
-                  className="rounded-full bg-[#171513] hover:bg-[#2D2823] dark:bg-[#F2C46A] dark:hover:bg-[#E5B555] text-[#FCF0DA] dark:text-[#171513] px-5 py-2 text-xs font-semibold transition-all shadow-sm cursor-pointer shrink-0"
+                  className="rounded-full bg-[#111827] hover:bg-[#1F2937] dark:bg-white dark:hover:bg-[#E5E7EB] text-white dark:text-[#111827] px-5 py-2 text-xs font-semibold transition-all shadow-sm cursor-pointer shrink-0"
                 >
                   Search
                 </button>
@@ -294,14 +293,14 @@ export default function ProductsCatalogView({
         <div className="lg:hidden flex items-center justify-between pb-2">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#1E1A17] text-xs font-semibold text-[#4C4541] dark:text-[#FBF3E6] shadow-sm"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-[#E5E7EB] dark:border-[#27272A] bg-white dark:bg-[#121214] text-xs font-semibold text-[#111827] dark:text-[#F9FAFB] shadow-sm"
           >
-            <SlidersHorizontal className="h-4 w-4 text-[#AEAC78]" />
+            <SlidersHorizontal className="h-4 w-4 text-[#6B7280]" />
             <span>{sidebarOpen ? "Hide Filter Menu" : "Show Category Filters"}</span>
           </button>
 
-          <span className="text-xs text-[#7A6F68] dark:text-[#B5AAA0]">
-            Showing <strong className="text-[#4C4541] dark:text-[#FBF3E6]">{filteredProducts.length}</strong> formulations
+          <span className="text-xs text-[#6B7280] dark:text-[#9CA3AF]">
+            Showing <strong className="text-[#111827] dark:text-[#F9FAFB]">{filteredProducts.length}</strong> formulations
           </span>
         </div>
 
@@ -314,15 +313,15 @@ export default function ProductsCatalogView({
           } lg:block lg:col-span-3 space-y-6 lg:sticky lg:top-24`}
         >
           {/* Categories Card */}
-          <div className="rounded-3xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#1E1A17] p-5 sm:p-6 shadow-sm space-y-5">
+          <div className="rounded-3xl border border-[#E5E7EB] dark:border-[#27272A] bg-white dark:bg-[#121214] p-5 sm:p-6 shadow-sm space-y-5">
             <div className="flex items-center justify-between">
-              <h2 className="text-sm font-bold tracking-tight text-[#4C4541] dark:text-[#FBF3E6] uppercase">
+              <h2 className="text-sm font-bold tracking-tight text-[#111827] dark:text-[#F9FAFB] uppercase">
                 Category
               </h2>
               {(activeCategory || searchTerm) && (
                 <button
                   onClick={clearFilters}
-                  className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#AEAC78] hover:underline"
+                  className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#111827] dark:text-white hover:underline"
                 >
                   <RotateCcw className="h-3 w-3" />
                   Reset
@@ -330,37 +329,31 @@ export default function ProductsCatalogView({
               )}
             </div>
 
-            {/* "All Product" active pill button with count badge */}
+            {/* "All Product" active pill button with red count badge */}
             <div>
               <button
                 onClick={() => handleCategorySelect("")}
                 className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition-all ${
                   !activeCategory
-                    ? "bg-[#171513] text-[#FCF0DA] dark:bg-[#F2C46A] dark:text-[#171513] shadow-sm"
-                    : "bg-[#FCF0DA]/60 dark:bg-[#171513] text-[#7A6F68] dark:text-[#B5AAA0] hover:bg-[#F5E5C9] dark:hover:bg-[#24201C]"
+                    ? "bg-[#F3F4F6] text-[#111827] dark:bg-[#27272A] dark:text-white"
+                    : "text-[#6B7280] dark:text-[#9CA3AF] hover:bg-[#F9FAFB] dark:hover:bg-[#18181B] hover:text-[#111827] dark:hover:text-white"
                 }`}
               >
                 <div className="flex items-center gap-2">
-                  <Layers className="h-4 w-4 shrink-0 text-[#AEAC78]" />
+                  <Layers className="h-4 w-4 shrink-0 text-[#111827] dark:text-white" />
                   <span>All Formulations</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span
-                    className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                      !activeCategory
-                        ? "bg-[#F2C46A] text-[#171513] dark:bg-[#171513] dark:text-[#F2C46A]"
-                        : "bg-[#DECBB0] dark:bg-[#3D352F] text-[#4C4541] dark:text-[#FBF3E6]"
-                    }`}
-                  >
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#EF4444] text-white">
                     {products.length}
                   </span>
-                  <ChevronRight className="h-3.5 w-3.5 opacity-60" />
+                  <ChevronRight className="h-3.5 w-3.5 opacity-40" />
                 </div>
               </button>
             </div>
 
             {/* Hierarchical category list with tree branches */}
-            <div className="space-y-1 pl-2 border-l border-[#DECBB0]/70 dark:border-[#3D352F]/70 ml-2">
+            <div className="space-y-1 pl-2 border-l border-[#E5E7EB] dark:border-[#27272A] ml-2">
               {categories.map((c) => {
                 const isSelected = activeCategory === c.slug;
                 const count = c._count?.websites ?? 0;
@@ -370,19 +363,19 @@ export default function ProductsCatalogView({
                     onClick={() => handleCategorySelect(c.slug)}
                     className={`w-full group flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all text-left ${
                       isSelected
-                        ? "bg-[#AEAC78]/20 text-[#5A5B35] dark:text-[#AEAC78] font-bold"
-                        : "text-[#7A6F68] dark:text-[#B5AAA0] hover:text-[#4C4541] dark:hover:text-[#FBF3E6] hover:bg-[#FCF0DA]/50 dark:hover:bg-[#171513]"
+                        ? "bg-[#F3F4F6] text-[#111827] dark:bg-[#27272A] dark:text-white font-bold"
+                        : "text-[#6B7280] dark:text-[#9CA3AF] hover:text-[#111827] dark:hover:text-white hover:bg-[#F9FAFB] dark:hover:bg-[#18181B]"
                     }`}
                   >
                     <div className="flex items-center gap-2 truncate">
-                      <span className="text-[#DECBB0] dark:text-[#3D352F] group-hover:text-[#AEAC78]">
+                      <span className="text-[#D1D5DB] dark:text-[#3F3F46] group-hover:text-[#111827] dark:group-hover:text-white">
                         ↳
                       </span>
                       {getCategoryIcon(c.slug)}
                       <span className="truncate">{c.name}</span>
                     </div>
                     {count > 0 && (
-                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-md bg-[#FCF0DA] dark:bg-[#171513] text-[#7A6F68] dark:text-[#B5AAA0] shrink-0 border border-[#DECBB0]/50 dark:border-[#3D352F]/50">
+                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-md bg-[#F3F4F6] dark:bg-[#18181B] text-[#6B7280] dark:text-[#9CA3AF] shrink-0 border border-[#E5E7EB] dark:border-[#27272A]">
                         {count}
                       </span>
                     )}
@@ -392,39 +385,39 @@ export default function ProductsCatalogView({
             </div>
 
             {/* Filter Accordion: Formulation Status */}
-            <div className="pt-4 border-t border-[#DECBB0] dark:border-[#3D352F] space-y-3">
+            <div className="pt-4 border-t border-[#E5E7EB] dark:border-[#27272A] space-y-3">
               <button
                 type="button"
                 onClick={() => toggleAccordion("status")}
-                className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#4C4541] dark:text-[#FBF3E6]"
+                className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#111827] dark:text-[#F9FAFB]"
               >
                 <span>Release Status</span>
                 {openAccordions.status ? (
-                  <ChevronDown className="h-4 w-4 text-[#7A6F68]" />
+                  <ChevronDown className="h-4 w-4 text-[#9CA3AF]" />
                 ) : (
-                  <ChevronRight className="h-4 w-4 text-[#7A6F68]" />
+                  <ChevronRight className="h-4 w-4 text-[#9CA3AF]" />
                 )}
               </button>
 
               {openAccordions.status && (
-                <div className="space-y-2 text-xs text-[#7A6F68] dark:text-[#B5AAA0]">
-                  <div className="flex items-center justify-between px-2 py-1 rounded-lg hover:bg-[#FCF0DA]/50 dark:hover:bg-[#171513]">
+                <div className="space-y-2 text-xs text-[#6B7280] dark:text-[#9CA3AF]">
+                  <div className="flex items-center justify-between px-2 py-1 rounded-lg hover:bg-[#F9FAFB] dark:hover:bg-[#18181B]">
                     <span className="flex items-center gap-2">
-                      <span className="h-2 w-2 rounded-full bg-[#AEAC78] animate-pulse" />
+                      <span className="h-2 w-2 rounded-full bg-[#10B981] animate-pulse" />
                       Active Live Batches
                     </span>
                     <span className="font-mono text-[10px]">{products.length}</span>
                   </div>
-                  <div className="flex items-center justify-between px-2 py-1 rounded-lg hover:bg-[#FCF0DA]/50 dark:hover:bg-[#171513]">
+                  <div className="flex items-center justify-between px-2 py-1 rounded-lg hover:bg-[#F9FAFB] dark:hover:bg-[#18181B]">
                     <span className="flex items-center gap-2">
-                      <ShieldCheck className="h-3.5 w-3.5 text-[#AEAC78]" />
+                      <ShieldCheck className="h-3.5 w-3.5 text-[#111827] dark:text-white" />
                       Chromatography Verified
                     </span>
                     <span className="font-mono text-[10px]">100%</span>
                   </div>
-                  <div className="flex items-center justify-between px-2 py-1 rounded-lg hover:bg-[#FCF0DA]/50 dark:hover:bg-[#171513]">
+                  <div className="flex items-center justify-between px-2 py-1 rounded-lg hover:bg-[#F9FAFB] dark:hover:bg-[#18181B]">
                     <span className="flex items-center gap-2">
-                      <Award className="h-3.5 w-3.5 text-[#AEAC78]" />
+                      <Award className="h-3.5 w-3.5 text-[#111827] dark:text-white" />
                       Dedicated Subdomain Ready
                     </span>
                     <span className="font-mono text-[10px]">{products.length}</span>
@@ -434,32 +427,32 @@ export default function ProductsCatalogView({
             </div>
 
             {/* Filter Accordion: Potency & Standards */}
-            <div className="pt-4 border-t border-[#DECBB0] dark:border-[#3D352F] space-y-3">
+            <div className="pt-4 border-t border-[#E5E7EB] dark:border-[#27272A] space-y-3">
               <button
                 type="button"
                 onClick={() => toggleAccordion("certification")}
-                className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#4C4541] dark:text-[#FBF3E6]"
+                className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#111827] dark:text-[#F9FAFB]"
               >
                 <span>Purity Standards</span>
                 {openAccordions.certification ? (
-                  <ChevronDown className="h-4 w-4 text-[#7A6F68]" />
+                  <ChevronDown className="h-4 w-4 text-[#9CA3AF]" />
                 ) : (
-                  <ChevronRight className="h-4 w-4 text-[#7A6F68]" />
+                  <ChevronRight className="h-4 w-4 text-[#9CA3AF]" />
                 )}
               </button>
 
               {openAccordions.certification && (
-                <ul className="space-y-1.5 text-xs text-[#7A6F68] dark:text-[#B5AAA0] pl-1">
+                <ul className="space-y-1.5 text-xs text-[#6B7280] dark:text-[#9CA3AF] pl-1">
                   <li className="flex items-center gap-2">
-                    <Check className="h-3.5 w-3.5 text-[#AEAC78]" />
+                    <Check className="h-3.5 w-3.5 text-[#10B981]" />
                     <span>Non-GMO Project Verified</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="h-3.5 w-3.5 text-[#AEAC78]" />
+                    <Check className="h-3.5 w-3.5 text-[#10B981]" />
                     <span>Heavy Metals ICP-MS Tested</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="h-3.5 w-3.5 text-[#AEAC78]" />
+                    <Check className="h-3.5 w-3.5 text-[#10B981]" />
                     <span>Zero Synthetic Binders</span>
                   </li>
                 </ul>
@@ -473,20 +466,20 @@ export default function ProductsCatalogView({
         {/* --------------------------------------------------------- */}
         <section className="lg:col-span-9 space-y-6">
           {/* Header Bar with Sort Dropdown & Product Count */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#FFF8ED] dark:bg-[#1E1A17] border border-[#DECBB0] dark:border-[#3D352F] rounded-2xl px-5 py-3 shadow-sm">
-            <div className="text-xs text-[#7A6F68] dark:text-[#B5AAA0]">
-              Showing <strong className="text-[#4C4541] dark:text-[#FBF3E6]">{filteredProducts.length}</strong> certified bioactive formulations
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-[#121214] border border-[#E5E7EB] dark:border-[#27272A] rounded-2xl px-5 py-3 shadow-sm">
+            <div className="text-xs text-[#6B7280] dark:text-[#9CA3AF]">
+              Showing <strong className="text-[#111827] dark:text-[#F9FAFB]">{filteredProducts.length}</strong> certified bioactive formulations
               {activeCategory && (
-                <span> in <span className="text-[#5A5B35] dark:text-[#AEAC78] font-semibold">{categories.find((c) => c.slug === activeCategory)?.name || activeCategory}</span></span>
+                <span> in <span className="text-[#111827] dark:text-white font-semibold">{categories.find((c) => c.slug === activeCategory)?.name || activeCategory}</span></span>
               )}
             </div>
 
             <div className="flex items-center gap-2 text-xs">
-              <span className="text-[#7A6F68] dark:text-[#B5AAA0] shrink-0 font-medium">Sort by:</span>
+              <span className="text-[#6B7280] dark:text-[#9CA3AF] shrink-0 font-medium">Sort by:</span>
               <select
                 value={selectedSort}
                 onChange={(e) => setSelectedSort(e.target.value)}
-                className="rounded-xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FCF0DA]/60 dark:bg-[#171513] px-3 py-1.5 text-xs text-[#4C4541] dark:text-[#FBF3E6] focus:border-[#AEAC78] focus:outline-none cursor-pointer"
+                className="rounded-xl border border-[#E5E7EB] dark:border-[#27272A] bg-[#F9FAFB] dark:bg-[#18181B] px-3 py-1.5 text-xs text-[#111827] dark:text-[#F9FAFB] focus:border-[#111827] dark:focus:border-white focus:outline-none cursor-pointer"
               >
                 <option value="recommended">Featured Formulations</option>
                 <option value="rating">Highest Lab Assay Rating</option>
@@ -498,17 +491,17 @@ export default function ProductsCatalogView({
 
           {/* EMPTY STATE */}
           {filteredProducts.length === 0 ? (
-            <div className="rounded-3xl border border-dashed border-[#DECBB0] dark:border-[#3D352F] p-16 text-center space-y-4 bg-[#FFF8ED] dark:bg-[#1E1A17]">
-              <Leaf className="h-10 w-10 text-[#AEAC78] mx-auto opacity-70" />
-              <h3 className="text-lg font-bold text-[#4C4541] dark:text-[#FBF3E6]">
+            <div className="rounded-3xl border border-dashed border-[#E5E7EB] dark:border-[#27272A] p-16 text-center space-y-4 bg-white dark:bg-[#121214]">
+              <Leaf className="h-10 w-10 text-[#6B7280] mx-auto opacity-70" />
+              <h3 className="text-lg font-bold text-[#111827] dark:text-[#F9FAFB]">
                 No Formulations Found
               </h3>
-              <p className="text-xs sm:text-sm text-[#7A6F68] dark:text-[#B5AAA0] max-w-md mx-auto">
+              <p className="text-xs sm:text-sm text-[#6B7280] dark:text-[#9CA3AF] max-w-md mx-auto">
                 No active botanical supplements match your search &ldquo;{searchTerm}&rdquo; or filter criteria.
               </p>
               <button
                 onClick={clearFilters}
-                className="inline-flex items-center gap-1.5 rounded-full bg-[#F2C46A] hover:bg-[#E5B555] px-5 py-2 text-xs font-semibold text-[#2D2305] transition-all shadow-sm cursor-pointer"
+                className="inline-flex items-center gap-1.5 rounded-full bg-[#111827] hover:bg-[#1F2937] dark:bg-white dark:hover:bg-[#E5E7EB] text-white dark:text-[#111827] px-5 py-2 text-xs font-semibold transition-all shadow-sm cursor-pointer"
               >
                 <RotateCcw className="h-3.5 w-3.5" />
                 Clear All Filters
@@ -528,18 +521,18 @@ export default function ProductsCatalogView({
                 return (
                   <div
                     key={product.id}
-                    className="group rounded-3xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#1E1A17] p-5 flex flex-col justify-between hover:border-[#AEAC78] dark:hover:border-[#AEAC78] transition-all duration-300 shadow-sm hover:shadow-md"
+                    className="group rounded-3xl border border-[#E5E7EB] dark:border-[#27272A] bg-white dark:bg-[#121214] p-5 flex flex-col justify-between hover:border-[#D1D5DB] dark:hover:border-[#3F3F46] transition-all duration-300 shadow-sm hover:shadow-md"
                   >
                     <div className="space-y-4">
                       {/* Product Image Container with soft background & floating category badge */}
-                      <div className="relative aspect-square w-full rounded-2xl bg-[#FCF0DA]/60 dark:bg-[#171513] border border-[#DECBB0]/70 dark:border-[#3D352F]/70 overflow-hidden flex items-center justify-center p-4">
+                      <div className="relative aspect-square w-full rounded-2xl bg-[#F3F4F6] dark:bg-[#18181B] border border-[#E5E7EB]/70 dark:border-[#27272A] overflow-hidden flex items-center justify-center p-4">
                         {/* Top-Right Floating Category Pill */}
-                        <span className="absolute top-3 right-3 z-10 text-[10px] font-semibold text-[#4C4541] dark:text-[#FBF3E6] bg-white/90 dark:bg-[#201C19]/90 px-2.5 py-1 rounded-full border border-[#DECBB0] dark:border-[#3D352F] shadow-sm backdrop-blur-sm">
+                        <span className="absolute top-3 right-3 z-10 text-[10px] font-semibold text-[#4B5563] dark:text-[#D4D4D8] bg-white/95 dark:bg-[#27272A]/95 px-2.5 py-1 rounded-full border border-[#E5E7EB] dark:border-[#3F3F46] shadow-sm backdrop-blur-sm">
                           {metrics.badge}
                         </span>
 
                         {/* Top-Left WebP Technology Badge */}
-                        <span className="absolute top-3 left-3 z-10 text-[9px] font-mono font-bold text-[#5A5B35] dark:text-[#AEAC78] bg-[#AEAC78]/15 px-2 py-0.5 rounded-md border border-[#AEAC78]/30">
+                        <span className="absolute top-3 left-3 z-10 text-[9px] font-mono font-bold text-[#6B7280] dark:text-[#9CA3AF] bg-white/80 dark:bg-[#27272A]/80 px-2 py-0.5 rounded-md border border-[#E5E7EB] dark:border-[#3F3F46]">
                           WebP
                         </span>
 
@@ -548,10 +541,10 @@ export default function ProductsCatalogView({
                           <img
                             src={product.imageUrl}
                             alt={product.name}
-                            className="h-full w-full object-contain group-hover:scale-108 transition-transform duration-300"
+                            className="h-full w-full object-contain group-hover:scale-105 transition-transform duration-300"
                           />
                         ) : (
-                          <div className="flex flex-col items-center justify-center text-[#AEAC78] space-y-2">
+                          <div className="flex flex-col items-center justify-center text-[#9CA3AF] space-y-2">
                             <Leaf className="h-12 w-12 opacity-60" />
                             <span className="text-xs font-mono">Botanical Extract</span>
                           </div>
@@ -560,7 +553,7 @@ export default function ProductsCatalogView({
 
                       {/* Product Title */}
                       <div>
-                        <h3 className="text-base font-bold text-[#4C4541] dark:text-[#FBF3E6] group-hover:text-[#5A5B35] dark:group-hover:text-[#AEAC78] transition-colors line-clamp-1">
+                        <h3 className="text-base font-bold text-[#111827] dark:text-[#F9FAFB] group-hover:text-black dark:group-hover:text-white transition-colors line-clamp-1">
                           {product.name}
                         </h3>
                       </div>
@@ -568,43 +561,43 @@ export default function ProductsCatalogView({
                       {/* Rating & Reviews on Left + Price on Right */}
                       <div className="flex items-center justify-between gap-2">
                         <div className="flex items-center gap-1.5 text-xs">
-                          <Star className="h-3.5 w-3.5 fill-[#F2C46A] text-[#F2C46A]" />
-                          <span className="font-bold text-[#4C4541] dark:text-[#FBF3E6]">
+                          <Star className="h-3.5 w-3.5 fill-[#F59E0B] text-[#F59E0B]" />
+                          <span className="font-bold text-[#111827] dark:text-[#F9FAFB]">
                             {metrics.rating.toFixed(1)}
                           </span>
-                          <span className="text-[11px] text-[#7A6F68] dark:text-[#B5AAA0]">
+                          <span className="text-[11px] text-[#6B7280] dark:text-[#9CA3AF]">
                             ({metrics.reviews})
                           </span>
                         </div>
 
-                        <div className="text-base font-black text-[#4C4541] dark:text-[#FBF3E6]">
+                        <div className="text-base font-black text-[#111827] dark:text-[#F9FAFB]">
                           {metrics.price}
                         </div>
                       </div>
 
                       {/* Dedicated Subdomain Badge */}
-                      <div className="flex items-center gap-1.5 font-mono text-[11px] text-[#5A5B35] dark:text-[#AEAC78] bg-[#FCF0DA]/80 dark:bg-[#171513] px-2.5 py-1 rounded-lg border border-[#DECBB0] dark:border-[#3D352F]">
-                        <span className="h-1.5 w-1.5 rounded-full bg-[#AEAC78]" />
+                      <div className="flex items-center gap-1.5 font-mono text-[11px] text-[#6B7280] dark:text-[#9CA3AF] bg-[#F9FAFB] dark:bg-[#18181B] px-2.5 py-1 rounded-lg border border-[#E5E7EB] dark:border-[#27272A]">
+                        <span className="h-1.5 w-1.5 rounded-full bg-[#10B981]" />
                         <span className="truncate">{product.subdomain}.sitenest.com</span>
                       </div>
                     </div>
 
                     {/* Dual Action Buttons matching reference UI */}
-                    <div className="mt-5 pt-4 border-t border-[#DECBB0] dark:border-[#3D352F] grid grid-cols-2 gap-2.5">
-                      {/* Button 1: "Lab Specs" (Outline pill with high-contrast hover) */}
+                    <div className="mt-5 pt-4 border-t border-[#E5E7EB] dark:border-[#27272A] grid grid-cols-2 gap-2.5">
+                      {/* Button 1: "Lab Specs" (Outline pill with high contrast) */}
                       <Link
                         href={`/products/${product.slug}`}
-                        className="rounded-full border border-[#DECBB0] dark:border-[#3D352F] bg-white dark:bg-[#201C19] text-[#4C4541] dark:text-[#FBF3E6] hover:bg-[#171513] hover:text-[#FCF0DA] hover:border-[#171513] dark:hover:bg-[#F2C46A] dark:hover:text-[#171513] dark:hover:border-[#F2C46A] py-2.5 px-3 text-xs font-semibold text-center transition-all duration-200 shadow-sm cursor-pointer"
+                        className="rounded-full border border-[#E5E7EB] dark:border-[#27272A] bg-white dark:bg-[#18181B] text-[#111827] dark:text-[#F9FAFB] hover:bg-[#F3F4F6] dark:hover:bg-[#27272A] hover:border-[#D1D5DB] dark:hover:border-[#3F3F46] py-2.5 px-3 text-xs font-semibold text-center transition-all duration-200 shadow-sm cursor-pointer"
                       >
                         Lab Specs
                       </Link>
 
-                      {/* Button 2: "Visit Microsite" (Solid dark / amber pill with active hover) */}
+                      {/* Button 2: "Visit Site" (Solid dark / white pill) */}
                       <a
                         href={`/s/${product.subdomain}`}
                         target="_blank"
                         rel="noreferrer"
-                        className="rounded-full border border-[#171513] dark:border-[#F2C46A] bg-[#171513] dark:bg-[#F2C46A] text-[#FCF0DA] dark:text-[#171513] hover:bg-[#2D2823] hover:border-[#2D2823] hover:text-white dark:hover:bg-[#E5B555] dark:hover:border-[#E5B555] dark:hover:text-black py-2.5 px-3 text-xs font-semibold text-center transition-all duration-200 shadow-sm inline-flex items-center justify-center gap-1 cursor-pointer"
+                        className="rounded-full bg-[#111827] hover:bg-[#1F2937] text-white dark:bg-white dark:text-[#111827] dark:hover:bg-[#E5E7EB] py-2.5 px-3 text-xs font-semibold text-center transition-all duration-200 shadow-sm inline-flex items-center justify-center gap-1 cursor-pointer"
                       >
                         <span>Visit Site</span>
                         <ExternalLink className="h-3 w-3" />
@@ -619,20 +612,20 @@ export default function ProductsCatalogView({
           {/* ========================================================= */}
           {/* BOTTOM PAGINATION BAR (MATCHING REFERENCE UI)             */}
           {/* ========================================================= */}
-          <div className="pt-8 pb-4 flex items-center justify-center gap-2 text-xs font-medium text-[#7A6F68] dark:text-[#B5AAA0]">
+          <div className="pt-8 pb-4 flex items-center justify-center gap-2 text-xs font-medium text-[#6B7280] dark:text-[#9CA3AF]">
             <button
               disabled
-              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full border border-[#DECBB0] dark:border-[#3D352F] opacity-50 cursor-not-allowed"
+              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full border border-[#E5E7EB] dark:border-[#27272A] opacity-50 cursor-not-allowed"
             >
               <ArrowLeft className="h-3 w-3" />
               Previous
             </button>
-            <span className="h-8 w-8 rounded-full bg-[#171513] text-[#FCF0DA] dark:bg-[#F2C46A] dark:text-[#171513] font-bold flex items-center justify-center shadow-sm">
+            <span className="h-8 w-8 rounded-full bg-[#111827] text-white dark:bg-white dark:text-[#111827] font-bold flex items-center justify-center shadow-sm">
               1
             </span>
             <button
               disabled
-              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full border border-[#DECBB0] dark:border-[#3D352F] opacity-50 cursor-not-allowed"
+              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full border border-[#E5E7EB] dark:border-[#27272A] opacity-50 cursor-not-allowed"
             >
               Next
               <ArrowRight className="h-3 w-3" />
@@ -644,13 +637,13 @@ export default function ProductsCatalogView({
       {/* ========================================================= */}
       {/* SECTION: EXPLORE OUR RECOMMENDATIONS (IMAGE 2 INSPIRATION) */}
       {/* ========================================================= */}
-      <section className="pt-6 border-t border-[#DECBB0] dark:border-[#3D352F] space-y-6">
+      <section className="pt-6 border-t border-[#E5E7EB] dark:border-[#27272A] space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <span className="text-[11px] font-bold uppercase tracking-widest text-[#5A5B35] dark:text-[#AEAC78]">
+            <span className="text-[11px] font-bold uppercase tracking-widest text-[#6B7280] dark:text-[#9CA3AF]">
               CLINICAL SYNERGY
             </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#4C4541] dark:text-[#FBF3E6]">
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#111827] dark:text-[#F9FAFB]">
               Explore our recommendations
             </h2>
           </div>
@@ -660,14 +653,14 @@ export default function ProductsCatalogView({
             <button
               onClick={() => scrollCarousel("left")}
               aria-label="Previous recommendation"
-              className="h-9 w-9 rounded-full border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#1E1A17] flex items-center justify-center text-[#4C4541] dark:text-[#FBF3E6] hover:bg-[#171513] hover:text-[#FCF0DA] hover:border-[#171513] dark:hover:bg-[#F2C46A] dark:hover:text-[#171513] dark:hover:border-[#F2C46A] transition-all cursor-pointer shadow-sm"
+              className="h-9 w-9 rounded-full border border-[#E5E7EB] dark:border-[#27272A] bg-white dark:bg-[#121214] flex items-center justify-center text-[#111827] dark:text-[#F9FAFB] hover:bg-[#111827] hover:text-white dark:hover:bg-white dark:hover:text-[#111827] transition-all cursor-pointer shadow-sm"
             >
               <ArrowLeft className="h-4 w-4" />
             </button>
             <button
               onClick={() => scrollCarousel("right")}
               aria-label="Next recommendation"
-              className="h-9 w-9 rounded-full border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#1E1A17] flex items-center justify-center text-[#4C4541] dark:text-[#FBF3E6] hover:bg-[#171513] hover:text-[#FCF0DA] hover:border-[#171513] dark:hover:bg-[#F2C46A] dark:hover:text-[#171513] dark:hover:border-[#F2C46A] transition-all cursor-pointer shadow-sm"
+              className="h-9 w-9 rounded-full border border-[#E5E7EB] dark:border-[#27272A] bg-white dark:bg-[#121214] flex items-center justify-center text-[#111827] dark:text-[#F9FAFB] hover:bg-[#111827] hover:text-white dark:hover:bg-white dark:hover:text-[#111827] transition-all cursor-pointer shadow-sm"
             >
               <ArrowRight className="h-4 w-4" />
             </button>
@@ -690,11 +683,11 @@ export default function ProductsCatalogView({
             return (
               <div
                 key={`rec-${item.id}`}
-                className="group w-72 shrink-0 rounded-3xl border border-[#DECBB0] dark:border-[#3D352F] bg-[#FFF8ED] dark:bg-[#1E1A17] p-4 flex flex-col justify-between shadow-sm hover:border-[#AEAC78] dark:hover:border-[#AEAC78] transition-all duration-300 hover:shadow-md"
+                className="group w-72 shrink-0 rounded-3xl border border-[#E5E7EB] dark:border-[#27272A] bg-white dark:bg-[#121214] p-4 flex flex-col justify-between shadow-sm hover:border-[#D1D5DB] dark:hover:border-[#3F3F46] transition-all duration-300 hover:shadow-md"
               >
                 <div className="space-y-3">
-                  <div className="relative aspect-[4/3] w-full rounded-2xl bg-[#FCF0DA]/60 dark:bg-[#171513] border border-[#DECBB0]/70 dark:border-[#3D352F]/70 overflow-hidden flex items-center justify-center p-3">
-                    <span className="absolute top-2.5 right-2.5 text-[9px] font-semibold text-[#4C4541] dark:text-[#FBF3E6] bg-white/90 dark:bg-[#201C19]/90 px-2 py-0.5 rounded-full border border-[#DECBB0] dark:border-[#3D352F]">
+                  <div className="relative aspect-[4/3] w-full rounded-2xl bg-[#F3F4F6] dark:bg-[#18181B] border border-[#E5E7EB]/70 dark:border-[#27272A] overflow-hidden flex items-center justify-center p-3">
+                    <span className="absolute top-2.5 right-2.5 text-[9px] font-semibold text-[#4B5563] dark:text-[#D4D4D8] bg-white/95 dark:bg-[#27272A]/95 px-2 py-0.5 rounded-full border border-[#E5E7EB] dark:border-[#3F3F46]">
                       {metrics.badge}
                     </span>
                     {item.imageUrl && (
@@ -706,36 +699,36 @@ export default function ProductsCatalogView({
                     )}
                   </div>
 
-                  <h4 className="text-sm font-bold text-[#4C4541] dark:text-[#FBF3E6] group-hover:text-[#5A5B35] dark:group-hover:text-[#AEAC78] transition-colors truncate">
+                  <h4 className="text-sm font-bold text-[#111827] dark:text-[#F9FAFB] group-hover:text-black dark:group-hover:text-white transition-colors truncate">
                     {item.name}
                   </h4>
 
                   <div className="flex items-center justify-between text-xs">
-                    <span className="flex items-center gap-1 font-bold text-[#4C4541] dark:text-[#FBF3E6]">
-                      <Star className="h-3 w-3 fill-[#F2C46A] text-[#F2C46A]" />
+                    <span className="flex items-center gap-1 font-bold text-[#111827] dark:text-[#F9FAFB]">
+                      <Star className="h-3 w-3 fill-[#F59E0B] text-[#F59E0B]" />
                       {metrics.rating.toFixed(1)}
                     </span>
-                    <span className="font-extrabold text-[#4C4541] dark:text-[#FBF3E6]">
+                    <span className="font-extrabold text-[#111827] dark:text-[#F9FAFB]">
                       {metrics.price}
                     </span>
                   </div>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-[#DECBB0] dark:border-[#3D352F] grid grid-cols-2 gap-2 text-[11px]">
-                  {/* Button 1: "Specs" (Outline pill with high-contrast hover) */}
+                <div className="mt-4 pt-3 border-t border-[#E5E7EB] dark:border-[#27272A] grid grid-cols-2 gap-2 text-[11px]">
+                  {/* Button 1: "Specs" (Outline pill) */}
                   <Link
                     href={`/products/${item.slug}`}
-                    className="rounded-full border border-[#DECBB0] dark:border-[#3D352F] bg-white dark:bg-[#201C19] text-[#4C4541] dark:text-[#FBF3E6] hover:bg-[#171513] hover:text-[#FCF0DA] hover:border-[#171513] dark:hover:bg-[#F2C46A] dark:hover:text-[#171513] dark:hover:border-[#F2C46A] py-2 px-2 font-semibold text-center transition-all duration-200 shadow-sm cursor-pointer"
+                    className="rounded-full border border-[#E5E7EB] dark:border-[#27272A] bg-white dark:bg-[#18181B] text-[#111827] dark:text-[#F9FAFB] hover:bg-[#F3F4F6] dark:hover:bg-[#27272A] py-2 px-2 font-semibold text-center transition-all duration-200 shadow-sm cursor-pointer"
                   >
                     Specs
                   </Link>
 
-                  {/* Button 2: "Microsite" (Solid pill with active hover) */}
+                  {/* Button 2: "Microsite" (Solid pill) */}
                   <a
                     href={`/s/${item.subdomain}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="rounded-full border border-[#171513] dark:border-[#F2C46A] bg-[#171513] dark:bg-[#F2C46A] text-[#FCF0DA] dark:text-[#171513] hover:bg-[#2D2823] hover:border-[#2D2823] hover:text-white dark:hover:bg-[#E5B555] dark:hover:border-[#E5B555] dark:hover:text-black py-2 px-2 font-semibold text-center transition-all duration-200 shadow-sm inline-flex items-center justify-center gap-1 cursor-pointer"
+                    className="rounded-full bg-[#111827] hover:bg-[#1F2937] text-white dark:bg-white dark:text-[#111827] dark:hover:bg-[#E5E7EB] py-2 px-2 font-semibold text-center transition-all duration-200 shadow-sm inline-flex items-center justify-center gap-1 cursor-pointer"
                   >
                     <span>Microsite</span>
                     <ExternalLink className="h-2.5 w-2.5" />
@@ -750,36 +743,36 @@ export default function ProductsCatalogView({
       {/* ========================================================= */}
       {/* SECTION: SLEEK DARK NEWSLETTER BANNER (IMAGE 2 INSPIRATION) */}
       {/* ========================================================= */}
-      <section className="rounded-3xl bg-[#171513] dark:bg-[#1E1A17] text-[#FCF0DA] dark:text-[#FBF3E6] p-8 sm:p-12 lg:p-14 border border-[#3D352F] shadow-lg relative overflow-hidden">
+      <section className="rounded-3xl bg-[#18181B] dark:bg-[#121214] text-white p-8 sm:p-12 lg:p-14 border border-[#27272A] shadow-xl relative overflow-hidden">
         {/* Subtle background glow */}
-        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-[#AEAC78]/10 blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-white/[0.04] blur-3xl pointer-events-none" />
 
         <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           {/* Left Column: Heading & Email Input */}
           <div className="lg:col-span-7 space-y-6">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#FCF0DA] leading-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white leading-tight">
               Ready to Optimize Your Vitality?
             </h2>
 
             {isSubscribed ? (
-              <div className="inline-flex items-center gap-2 bg-[#AEAC78]/20 text-[#AEAC78] border border-[#AEAC78]/40 px-4 py-2.5 rounded-full text-xs font-semibold">
+              <div className="inline-flex items-center gap-2 bg-[#10B981]/20 text-[#10B981] border border-[#10B981]/40 px-4 py-2.5 rounded-full text-xs font-semibold">
                 <Check className="h-4 w-4" />
                 <span>Thank you! You are subscribed to certified batch releases.</span>
               </div>
             ) : (
               <form onSubmit={handleSubscribe} className="max-w-md">
-                <div className="relative flex items-center bg-[#25221F] border border-[#3D352F] rounded-full p-1.5 pl-4 shadow-inner focus-within:border-[#AEAC78]">
+                <div className="relative flex items-center bg-[#27272A] border border-[#3F3F46] rounded-full p-1.5 pl-4 shadow-inner focus-within:border-white">
                   <input
                     type="email"
                     required
                     value={emailInput}
                     onChange={(e) => setEmailInput(e.target.value)}
                     placeholder="Enter your email address..."
-                    className="w-full bg-transparent text-xs sm:text-sm text-[#FCF0DA] placeholder-[#7A6F68] focus:outline-none"
+                    className="w-full bg-transparent text-xs sm:text-sm text-white placeholder-gray-400 focus:outline-none"
                   />
                   <button
                     type="submit"
-                    className="rounded-full bg-[#F2C46A] hover:bg-[#E5B555] text-[#171513] px-6 py-2.5 text-xs font-bold transition-all shadow-sm cursor-pointer shrink-0"
+                    className="rounded-full bg-white hover:bg-gray-100 text-[#111827] px-6 py-2.5 text-xs font-bold transition-all shadow-sm cursor-pointer shrink-0"
                   >
                     Send
                   </button>
@@ -789,8 +782,8 @@ export default function ProductsCatalogView({
           </div>
 
           {/* Right Column: Mission description */}
-          <div className="lg:col-span-5 space-y-2 text-xs sm:text-sm text-[#B5AAA0] leading-relaxed lg:pl-6 lg:border-l lg:border-[#3D352F]">
-            <p className="font-bold text-[#FCF0DA]">
+          <div className="lg:col-span-5 space-y-2 text-xs sm:text-sm text-gray-300 leading-relaxed lg:pl-6 lg:border-l lg:border-[#27272A]">
+            <p className="font-bold text-white">
               SiteNest Botanical Nutrition & Research
             </p>
             <p>

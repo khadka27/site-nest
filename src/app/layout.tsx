@@ -34,7 +34,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className="min-h-full flex flex-col bg-[#FCF0DA] dark:bg-[#171513] text-[#4C4541] dark:text-[#FBF3E6] transition-colors duration-200"
+        className="min-h-full flex flex-col bg-white dark:bg-[#09090B] text-[#111827] dark:text-[#F9FAFB] transition-colors duration-200"
         suppressHydrationWarning
       >
         {children}
